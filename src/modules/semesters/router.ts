@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import ModuleService from '../../libs/ModuleService'
-import ModuleController from '../../libs/ModuleControllers'
+import ModuleController from '../../libs/ModuleController'
 import { Semester } from '../../models/Scheduling'
 import { type SemesterSchema } from '../../definitions/schemas'
 

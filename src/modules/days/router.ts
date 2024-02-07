@@ -2,13 +2,13 @@
 import { Router } from 'express'
 import ModuleService from '../../libs/ModuleService'
 import ModuleController from '../../libs/ModuleController'
-import { Professor } from '../../models/Scheduling'
-import { type ProfessorSchema } from '../../definitions/schemas'
+import { Day } from '../../models/Scheduling'
+import { type DaySchema } from '../../definitions/schemas'
 
 const router = Router()
 
-const service = new ModuleService<ProfessorSchema>(Professor)
-const controller = new ModuleController<ProfessorSchema>(service)
+const service = new ModuleService<DaySchema>(Day)
+const controller = new ModuleController<DaySchema>(service)
 
 router.post('/', async (req, res) => {
   await controller.post(req, res)
