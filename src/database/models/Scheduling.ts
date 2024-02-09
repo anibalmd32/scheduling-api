@@ -19,9 +19,13 @@ const daySchema = new Schema<DaySchema>({
 
 const semesterSchema = new Schema<SemesterSchema>({
   number: Number,
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   sections: [{
     code: String,
-    subject: []
+    subjects: []
   }]
 }, {
   _id: true,
@@ -31,8 +35,9 @@ const semesterSchema = new Schema<SemesterSchema>({
 
 const classroomSchema = new Schema<ClassroomSchema>({
   code: String,
+  category: String,
   degrees: [],
-  hoursAvailable: daySchema,
+  hoursAvailable: [daySchema],
   hoursBusy: []
 }, {
   _id: true,
@@ -41,7 +46,7 @@ const classroomSchema = new Schema<ClassroomSchema>({
 })
 
 const scheduleSchema = new Schema<ScheduleSchema>({
-  classrom: classroomSchema,
+  classroom: classroomSchema,
   day: daySchema,
   endTime: String,
   startTime: String,

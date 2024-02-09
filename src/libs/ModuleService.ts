@@ -12,7 +12,7 @@ export default class ModuleService<T extends Collection<Document>> {
     this.model = model
   }
 
-  async createOne (data: T): Promise<T | T[]> {
+  async createOne (data: T): Promise<T> {
     const newDoc = await this.model.create(data)
 
     return newDoc

@@ -8,6 +8,7 @@ export interface DaySchema extends Collection<Document> {
 
 export interface SemesterSchema extends Collection<Document> {
   number: number
+  isActive: boolean
   sections: [
     {
       code: string
@@ -18,6 +19,7 @@ export interface SemesterSchema extends Collection<Document> {
 
 export interface ClassroomSchema extends Collection<Document> {
   code: string
+  category: 'laboratory' | 'normal' | 'pc'
   degrees: string[]
   hoursAvailable: Day[]
   hoursBusy: Schedule[]
@@ -28,7 +30,7 @@ export interface ScheduleSchema extends Collection<Document> {
   subject: Semester
   startTime: string
   endTime: string
-  classrom: Classroom
+  classroom: Classroom
 }
 
 export interface ProfessorSchema extends Collection<Document> {
