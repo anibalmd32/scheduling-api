@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "cross-env NODE_ENV=dev ts-node-dev --respawn --transpile-only ./src/app.ts",
 		"build": "tsc",
-		"start": "cross-env NODE_ENV=prod node ./dist/app.js"
+		"start": "cross-env NODE_ENV=prod node ./dist/app.js",
+		"db:seed": "ts-node ./src/database/seeds/seeds.ts"
 	},
 	"keywords": [
 		"scheduling",

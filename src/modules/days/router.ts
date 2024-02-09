@@ -2,7 +2,7 @@
 import { Router } from 'express'
 import ModuleService from '../../libs/ModuleService'
 import ModuleController from '../../libs/ModuleController'
-import { Day } from '../../models/Scheduling'
+import { Day } from '../../database/models/Scheduling'
 import { type DaySchema } from '../../definitions/schemas'
 
 const router = Router()

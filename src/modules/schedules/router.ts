@@ -2,7 +2,7 @@
 import { Router } from 'express'
 import ModuleService from '../../libs/ModuleService'
 import ModuleController from '../../libs/ModuleController'
-import { Schedule } from '../../models/Scheduling'
+import { Schedule } from '../../database/models/Scheduling'
 import { type ScheduleSchema } from '../../definitions/schemas'
 
 const router = Router()

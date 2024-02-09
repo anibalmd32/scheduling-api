@@ -3,7 +3,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 
 import { uri, port } from './config/contants'
-import { databaseConnection } from './config/databaseConnection'
+import { databaseConnection } from './database/connection'
 import modulesRouter from './router'
 
 void databaseConnection(uri)

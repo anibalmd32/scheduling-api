@@ -5,7 +5,7 @@ import {
   type ScheduleSchema,
   type ClassroomSchema,
   type ProfessorSchema
-} from '../definitions/schemas'
+} from '../../definitions/schemas'
 
 const daySchema = new Schema<DaySchema>({
   name: String,
