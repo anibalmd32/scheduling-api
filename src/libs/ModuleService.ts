@@ -1,3 +1,4 @@
+// * Mongoose Types
 import {
   type Model,
   type Collection,

@@ -1,6 +1,8 @@
+//* Types
 import { type Request, type Response } from 'express'
 import { type Collection, type Document } from 'mongoose'
 
+//* Service
 import type ModuleService from './ModuleService'
 
 export default class ModuleController<T extends Collection<Document>> {
