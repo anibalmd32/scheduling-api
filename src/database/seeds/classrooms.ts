@@ -1,5 +1,7 @@
-import { Classroom } from '../models/Scheduling'
-import { createWeekSchedule } from '../../utils/createWeekSchedule'
+import Classrooms from '../../modules/classrooms/model'
+import { type ClassroomSchema } from '../../modules/classrooms/definitions'
+import { morningHours } from '../../utils/morningHours'
+import { afternoonHours } from '../../utils/afterHours'
 
 const classrooms: Record<string, 'normal' | 'laboratory' | 'pc'> = {
   'aula 12': 'normal',
@@ -11,21 +13,21 @@ const classrooms: Record<string, 'normal' | 'laboratory' | 'pc'> = {
   'aula VAS y PC': 'pc'
 }
 
-const classroomsSeed: any[] = []
+const classroomsSeed: ClassroomSchema[] = []
 
 for (const room in classrooms) {
   classroomsSeed.push({
     code: room,
     category: classrooms[room],
     degrees: ['sistemas'],
-    hoursAvailable: createWeekSchedule(),
+    hoursAvailable: morningHours.concat(afternoonHours),
     hoursBusy: []
   })
 }
 
 export async function classroomsSeeder (): Promise<void> {
   try {
-    await Classroom.create(classroomsSeed)
+    await Classrooms.create<ClassroomSchema>(classroomsSeed)
     console.info('Classrooms has been seeding 🌱')
   } catch (error) {
     console.info(error)

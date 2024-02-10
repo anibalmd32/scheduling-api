@@ -1,6 +1,6 @@
 // ** For database connection
 import { connect, connection } from 'mongoose'
-import { uri } from '../../config/contants'
+import { uri } from '../../utils/contants'
 
 // ** Seeds
 import { daysSeeder } from './days'
