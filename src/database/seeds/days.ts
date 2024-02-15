@@ -1,6 +1,6 @@
 import Days from '../../modules/days/model'
 import { type DaySchema } from '../../modules/days/definitions'
-import { createWeekSchedule } from '../../utils/createWeekSchedule'
+import { createWeekSchedule } from '../../libs/createWeekSchedule'
 
 const daysSeed = createWeekSchedule()
 

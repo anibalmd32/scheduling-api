@@ -3,8 +3,7 @@ import { type DaySchema } from './definitions'
 
 const daySchema = new Schema<DaySchema>({
   name: String,
-  afternoonHours: [String],
-  morningHours: [String]
+  hours: [String]
 }, {
   _id: true,
   versionKey: false

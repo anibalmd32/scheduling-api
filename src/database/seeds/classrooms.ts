@@ -1,7 +1,6 @@
 import Classrooms from '../../modules/classrooms/model'
 import { type ClassroomSchema } from '../../modules/classrooms/definitions'
-import { morningHours } from '../../utils/morningHours'
-import { afternoonHours } from '../../utils/afterHours'
+import { createWeekSchedule, createVoidSchedule } from '../../libs/createWeekSchedule'
 
 const classrooms: Record<string, 'normal' | 'laboratory' | 'pc'> = {
   'aula 12': 'normal',
@@ -20,8 +19,8 @@ for (const room in classrooms) {
     code: room,
     category: classrooms[room],
     degrees: ['sistemas'],
-    hoursAvailable: morningHours.concat(afternoonHours),
-    hoursBusy: []
+    availability: createWeekSchedule(),
+    occupied: createVoidSchedule()
   })
 }
 

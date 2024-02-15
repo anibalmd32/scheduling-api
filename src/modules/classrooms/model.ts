@@ -5,7 +5,14 @@ const classroomSchema = new Schema<ClassroomSchema>({
   category: String,
   code: String,
   degrees: [String],
-  hoursAvailable: [String]
+  availability: [{
+    name: String,
+    hours: [String]
+  }],
+  occupied: [{
+    name: String,
+    hours: [String]
+  }]
 }, {
   _id: true,
   versionKey: false
