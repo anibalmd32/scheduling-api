@@ -1,3 +1,6 @@
+// ** Modules
+import path from 'node:path'
+
 // ** Models
 import Schedule from './model'
 import Classrooms from '../classrooms/model'
@@ -9,14 +12,18 @@ import { type ScheduleSchema, type ScheduleDTO } from './definitions'
 // ** Utils
 import { subjectsForLab } from '../../utils/subjectsForLab'
 import { subjectsForPC, dinForPc } from '../../utils/subjectsForPc'
+import { weekDays } from '../../utils/weekDays'
+import { morningHours } from '../../utils/morningHours'
+import { afternoonHours } from '../../utils/afterHours'
 
 // ** Libs
 import { formatInterval } from '../../libs/formatInterval'
 import { generateRandomDay } from '../../libs/generateRandomDay'
+import { generatePDF } from '../../libs/generatePDF'
 
 export default class ScheduleServices {
   async generateBySemester (data: ScheduleDTO):
-  Promise<ScheduleSchema[]> {
+  Promise<void> {
     const semester = await Semesters.findOne({
       number: data.semester
     })
@@ -116,28 +123,37 @@ export default class ScheduleServices {
               degree: data.degree,
               semester: data.semester
             })
-
-            // console.log(`
-            //   Materia: ${subject.name}
-            //   Aula: ${classroom.code}
-            //   Tipo de hora: ${hours}
-            //   Numero de horas: ${subjectHours[hours]}
-            //   Dia: ${dayToAsign.name}
-            //   Hora de entrada: ${start}
-            //   Hora de salida: ${end}
-            // `)
           }
         }
       }
     }
+  }
 
-    const schedule = await Schedule.find({
+  async generateSchedulePdf (data: ScheduleDTO): Promise<void> {
+    const templetaPath = path.join(process.cwd(), 'src', 'templetes', 'schedule.handlebars')
+    const outputPath = path.join(process.cwd(), 'public', 'schedules', `${data.degree}-${data.semester}.pdf`)
+    const schedulesData = await Schedule.find({
       $and: [
-        { degree: data.degree },
-        { semester: data.semester }
+        { semester: data.semester },
+        { degree: data.degree }
       ]
     })
+    const schedules: ScheduleSchema[] = schedulesData.map(sch => ({
+      classroom: sch.classroom,
+      day: sch.day,
+      degree: sch.degree,
+      endTime: sch.endTime,
+      semester: sch.semester,
+      startTime: sch.startTime,
+      subject: sch.subject
+    }))
 
-    return schedule
+    const pdfData = {
+      days: weekDays,
+      hours: morningHours.concat(afternoonHours),
+      schedules
+    }
+
+    await generatePDF(pdfData, templetaPath, outputPath)
   }
 }

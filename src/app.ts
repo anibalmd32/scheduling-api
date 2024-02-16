@@ -22,6 +22,7 @@ const app = express()
 
 // * Default middlewares
 app.use(express.json()) // ? Allow work with JSON data
+app.use(express.static('public')) // ? Allow get static files
 app.use(cors()) // ? Allow clients connection
 app.use(morgan('dev')) // ? Server activity logger
 
