@@ -1,6 +1,15 @@
+// * Models
 import Classrooms from './model'
-import { type ClassroomSchema, type ClassroomDTO, type ClassroomFilters } from './definitions'
+
+// * Libs
 import { createWeekSchedule, createVoidSchedule } from '../../libs/createWeekSchedule'
+
+// * Definitions
+import {
+  type ClassroomSchema,
+  type ClassroomDTO,
+  type ClassroomFilters
+} from './definitions'
 
 export class ClassroomServices {
   async addOneClassroom (data: ClassroomDTO):
@@ -34,7 +43,6 @@ export class ClassroomServices {
           { category: filters.category },
           { degrees: { $in: filters.degrees } }
         ]
-
       }
     }
 
