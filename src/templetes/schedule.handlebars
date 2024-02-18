@@ -34,6 +34,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
     }
 
     tr, td, th {
@@ -41,8 +42,9 @@
     }
 
     td, th {
-      padding: 0.5rem;
       text-align: center;
+      padding: 0.5rem;
+      width: 14.28%;
     }
   </style>
 </head>
@@ -65,13 +67,14 @@
       <tbody>
         {{#each hours}}
           <tr>
-            <td>{{this}}</td> 
-            <td>{{getSubject 'lunes' this}}</td>
-            <td>{{getSubject 'martes' this}}</td>
-            <td>{{getSubject 'miercoles' this}}</td>
-            <td>{{getSubject 'jueves' this}}</td>
-            <td>{{getSubject 'viernes' this}}</td>
-            <td>{{getSubject 'sábado' this}}</td>
+            <td>{{this}}</td>
+
+            {{subject 'lunes' this}}
+            {{subject 'martes' this}}
+            {{subject 'miercoles' this}}
+            {{subject 'jueves' this}}
+            {{subject 'viernes' this}}
+            {{subject 'sábado' this}}
           </tr>
         {{/each}}
       </tbody>

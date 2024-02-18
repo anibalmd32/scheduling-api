@@ -7,6 +7,7 @@ interface Data {
   days: string[]
   hours: string[]
   schedules: ScheduleSchema[]
+  classroom?: string
 }
 
 export async function generatePDF (
@@ -14,16 +15,30 @@ export async function generatePDF (
   templetaPath: string,
   outputPath: string
 ): Promise<void> {
-  Handlebars.registerHelper('getSubject', (
+  Handlebars.registerHelper('subject', function (
     day: string,
-    hour: string
-  ): string | undefined => {
-    const result = data.schedules.find(sch => (
+    hour: string,
+    context
+  ) {
+    const { schedules, classroom } = context.data.root
+
+    const result = schedules.find((sch: any) => (
       sch.day === day &&
-      sch.startTime === hour
+      sch.startTime === hour &&
+      sch.classroom === classroom
     ))
 
-    return result?.subject
+    if (result !== undefined) {
+      return new Handlebars.SafeString(`
+        <td rowspan="${result.extra.hourInterval}">
+          ${result.subject} <br/>
+          ${result.classroom} <br/>
+          ${result.extra.subjectType}
+        </td>
+      `)
+    } else {
+      return new Handlebars.SafeString('<td></td>')
+    }
   })
 
   const templeteHTML = fs.readFileSync(templetaPath, 'utf-8')

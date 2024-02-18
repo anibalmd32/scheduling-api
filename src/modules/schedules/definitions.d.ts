@@ -1,6 +1,7 @@
 export interface ScheduleDTO {
   semester: string
   degree: string
+  classroom?: string
 }
 
 export interface ScheduleSchema {
@@ -11,4 +12,8 @@ export interface ScheduleSchema {
   classroom: string
   semester: number
   degree: string
+  extra: {
+    hourInterval: number
+    subjectType: string
+  }
 }

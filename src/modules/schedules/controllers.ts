@@ -11,19 +11,21 @@ export default class ScheduleControllers {
     try {
       await service.generateBySemester({ degree, semester })
 
-      res.status(200).json({ message: 'success' })
+      res.status(200).json({ message: 'Horario generado exitosamente' })
     } catch (error: any) {
       res.status(400).json({ error: error.message })
     }
   }
 
   async generateSchedulePdf (req: Request, res: Response): Promise<void> {
+    const { degree, semester, classroom } = req.body as ScheduleDTO
     try {
       await service.generateSchedulePdf({
-        degree: 'sistemas',
-        semester: '1'
+        degree,
+        semester,
+        classroom
       })
-      res.status(200).json({ message: 'success' })
+      res.status(200).json({ message: 'PDF generado exitosamente' })
     } catch (error: any) {
       res.status(400).json({ error: error.message })
     }
