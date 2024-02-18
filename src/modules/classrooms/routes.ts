@@ -13,4 +13,8 @@ router.get(`${baseUrl}`, async (req, res) => {
   await controller.getAll(req, res)
 })
 
+router.put(`${baseUrl}/:id`, async (req, res) => {
+  await controller.updateData(req, res)
+})
+
 export default router

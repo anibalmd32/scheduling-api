@@ -31,4 +31,19 @@ export class ClassroomControllers {
       res.status(400).json({ error: error.message })
     }
   }
+
+  async updateData (req: Request, res: Response): Promise<void> {
+    const { category, code, degrees } = req.body as Partial<ClassroomDTO>
+    const id = req.params.id
+
+    try {
+      const updatedClassroom = await service.updateClassroom({
+        category, code, degrees
+      }, id)
+
+      res.status(200).json(updatedClassroom)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
 }

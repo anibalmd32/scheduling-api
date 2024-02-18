@@ -2,7 +2,10 @@
 import Classrooms from './model'
 
 // * Libs
-import { createWeekSchedule, createVoidSchedule } from '../../libs/createWeekSchedule'
+import {
+  createWeekSchedule,
+  createVoidSchedule
+} from '../../libs/createWeekSchedule'
 
 // * Definitions
 import {
@@ -49,5 +52,16 @@ export class ClassroomServices {
     const classroomsFiltered = await Classrooms.find(query)
 
     return classroomsFiltered
+  }
+
+  async updateClassroom (data: Partial<ClassroomDTO>, id: string):
+  Promise<ClassroomSchema | null> {
+    const updatedClassroom = await Classrooms.findByIdAndUpdate(
+      id,
+      data,
+      { new: true }
+    )
+
+    return updatedClassroom
   }
 }
