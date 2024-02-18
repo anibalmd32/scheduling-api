@@ -6,3 +6,12 @@ export interface ClassroomSchema {
   availability: DaySchema[]
   occupied: DaySchema[] | []
 }
+
+export interface ClassroomDTO extends Pick<
+ClassroomSchema,
+'code' |
+'category' |
+'degrees'
+> {}
+
+export interface ClassroomFilters extends Partial<ClassroomDTO> {}
