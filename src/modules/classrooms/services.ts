@@ -64,4 +64,11 @@ export class ClassroomServices {
 
     return updatedClassroom
   }
+
+  async deleteClassroom (id: string):
+  Promise<ClassroomSchema | null> {
+    const deletedClassroom = await Classrooms.findByIdAndDelete(id)
+
+    return deletedClassroom
+  }
 }

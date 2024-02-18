@@ -46,4 +46,16 @@ export class ClassroomControllers {
       res.status(400).json({ error: error.message })
     }
   }
+
+  async deleteOne (req: Request, res: Response): Promise<void> {
+    const id = req.params.findByIdAndDelete
+
+    try {
+      const deletedClassroom = await service.deleteClassroom(id)
+
+      res.status(200).json(deletedClassroom)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
 }

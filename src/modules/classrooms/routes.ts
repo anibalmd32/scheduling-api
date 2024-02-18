@@ -17,4 +17,8 @@ router.put(`${baseUrl}/:id`, async (req, res) => {
   await controller.updateData(req, res)
 })
 
+router.delete(`${baseUrl}/:id`, async (req, res) => {
+  await controller.deleteOne(req, res)
+})
+
 export default router
