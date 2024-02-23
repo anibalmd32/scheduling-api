@@ -17,3 +17,9 @@ export interface ScheduleSchema {
     subjectType: string
   }
 }
+
+export interface ScheduleEvent {
+  title: string
+  start: string
+  end: string
+}

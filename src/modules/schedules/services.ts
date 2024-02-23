@@ -5,6 +5,7 @@ import path from 'node:path'
 import { formatInterval } from '../../libs/formatInterval'
 import { generateRandomDay } from '../../libs/generateRandomDay'
 import { generatePDF } from '../../libs/generatePDF'
+import { formatEvent } from '../../libs/formatEvent'
 
 // ** Models
 import Schedule from './model'
@@ -12,7 +13,11 @@ import Classrooms from '../classrooms/model'
 import Semesters from '../semesters/model'
 
 // ** Types
-import { type ScheduleSchema, type ScheduleDTO } from './definitions'
+import {
+  type ScheduleSchema,
+  type ScheduleDTO,
+  type ScheduleEvent
+} from './definitions'
 
 // ** Utils
 import { subjectsForLab } from '../../utils/subjectsForLab'
@@ -181,5 +186,22 @@ export default class ScheduleServices {
     }
 
     await generatePDF(pdfData, templetaPath, outputPath)
+  }
+
+  async getScheduleEvent (data: ScheduleDTO):
+  Promise<ScheduleEvent[]> {
+    const schedulesData = await Schedule.find({
+      $and: [
+        { semester: data.semester },
+        { degree: data.degree },
+        { classroom: data.classroom }
+      ]
+    })
+
+    const events: ScheduleEvent[] = schedulesData.map(sch => {
+      return formatEvent(sch)
+    })
+
+    return events
   }
 }

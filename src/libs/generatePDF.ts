@@ -32,7 +32,6 @@ export async function generatePDF (
       return new Handlebars.SafeString(`
         <td rowspan="${result.extra.hourInterval}">
           ${result.subject} <br/>
-          ${result.classroom} <br/>
           ${result.extra.subjectType}
         </td>
       `)

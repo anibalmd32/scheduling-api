@@ -11,3 +11,9 @@ export interface ProfessorSchema {
   condition: string
   schedule: ScheduleSchema[]
 }
+
+export interface ProfessorsDTO extends Pick<
+ProfessorSchema,
+'data' |
+'condition'
+> {}
