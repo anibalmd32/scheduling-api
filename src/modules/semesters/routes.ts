@@ -10,4 +10,8 @@ router.get(`${baseUrl}/all`, async (req, res) => {
   await constroller.getAll(req, res)
 })
 
+router.patch(`${baseUrl}/subjects/update/:id`, async (req, res) => {
+  await constroller.updateSubject(req, res)
+})
+
 export default router

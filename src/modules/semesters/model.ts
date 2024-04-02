@@ -18,13 +18,6 @@ const semesterSchema = new Schema<SemesterSchema>({
   versionKey: false
 })
 
-semesterSchema.set('toJSON', {
-  transform: (doc, ret) => {
-    ret.id = ret._id
-    delete ret._id
-  }
-})
-
 const Semesters = model('semesters', semesterSchema)
 
 export default Semesters

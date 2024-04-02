@@ -1,15 +1,17 @@
+export interface Subject {
+  _id?: string
+  name: string
+  theoryHours: number
+  practiceHours: number
+  laboratoryHours: number
+}
+
+export interface Section {
+  code: string
+  subjects: Subject[]
+}
 export interface SemesterSchema {
   number: number
   isActive: boolean
-  sections: [
-    {
-      code: string
-      subjects: Array<{
-        name: string
-        theoryHours: number
-        practiceHours: number
-        laboratoryHours: number
-      }>
-    }
-  ]
+  sections: Section[]
 }
