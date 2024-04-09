@@ -8,8 +8,7 @@ export default class SemesterService {
     return allSemesters
   }
 
-  async updateOneSubject (
-    subjectId: string, data: Subject): Promise<Subject[]> {
+  async updateOneSubject (subjectId: string, data: Subject): Promise<Subject[]> {
     const updatedSemester = await Semesters.findOneAndUpdate(
       { 'sections.subjects._id': subjectId },
       { $set: { 'sections.$[i].subjects.$[j]': data } },
@@ -30,5 +29,23 @@ export default class SemesterService {
       .subjects.filter(subject => subject._id?.toString() === subjectId)
 
     return updatedSubject
+  }
+
+  async createSubject (sectionId: string, data: Subject): Promise<void> {
+    const subjectData: Subject = {
+      laboratoryHours: data.laboratoryHours,
+      name: data.name,
+      practiceHours: data.practiceHours,
+      theoryHours: data.practiceHours
+    }
+
+    const newSubject = await Semesters.findOneAndUpdate(
+      { 'sections._id': sectionId },
+      { $push: { 'sections.$.subjects': subjectData } }
+    )
+
+    if (newSubject === null) {
+      throw new Error('Cannot create')
+    }
   }
 }

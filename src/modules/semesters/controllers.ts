@@ -26,4 +26,16 @@ export default class SemesterController {
       res.status(400).json({ error: error.message })
     }
   }
+
+  async createSubject (req: Request, res: Response): Promise<void> {
+    const sectionId = String(req.query.section)
+    const subjectData = req.body as Subject
+
+    try {
+      await service.createSubject(sectionId, subjectData)
+      res.status(200).json({ message: 'success' })
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
 }
