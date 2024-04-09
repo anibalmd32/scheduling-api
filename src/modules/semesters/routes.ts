@@ -18,4 +18,8 @@ router.post(`${baseUrl}/subjects/create`, async (req, res) => {
   await constroller.createSubject(req, res)
 })
 
+router.delete(`${baseUrl}/subjects/delete/:subjectId`, async (req, res) => {
+  await constroller.deleteSubject(req, res)
+})
+
 export default router

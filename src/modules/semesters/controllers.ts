@@ -38,4 +38,15 @@ export default class SemesterController {
       res.status(400).json({ error: error.message })
     }
   }
+
+  async deleteSubject (req: Request, res: Response): Promise<void> {
+    const subjectId = String(req.params.subjectId)
+
+    try {
+      await service.deleteSubject(subjectId)
+      res.status(200).json({ message: 'success' })
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
 }

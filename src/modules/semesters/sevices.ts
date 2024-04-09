@@ -41,11 +41,24 @@ export default class SemesterService {
 
     const newSubject = await Semesters.findOneAndUpdate(
       { 'sections._id': sectionId },
-      { $push: { 'sections.$.subjects': subjectData } }
+      { $push: { 'sections.$.subjects': subjectData } },
+      { new: true }
     )
 
     if (newSubject === null) {
       throw new Error('Cannot create')
+    }
+  }
+
+  async deleteSubject (subjectId: string): Promise<void> {
+    const deletedSubject = await Semesters.findOneAndUpdate(
+      { 'sections.subjects._id': subjectId },
+      { $pull: { 'sections.$.subjects': { _id: subjectId } } },
+      { new: true }
+    )
+
+    if (deletedSubject === null) {
+      throw new Error('Cannot delete subject')
     }
   }
 }
