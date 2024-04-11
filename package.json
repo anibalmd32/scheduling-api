@@ -8,7 +8,8 @@
 		"build": "tsc",
 		"start": "node ./dist/app.js",
 		"lint": "eslint ./src/*.ts",
-		"db:seed": "ts-node ./src/database/seeds/seeds.ts"
+		"db:seed": "ts-node ./src/database/seeds/seeds.ts",
+		"docker:dev": "docker-compose up scheduling-api-dev --build"
 	},
 	"keywords": [
 		"scheduling",

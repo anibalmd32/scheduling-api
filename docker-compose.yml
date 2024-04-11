@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  scheduling-api:
+    container_name: scheduling-api
+    build: 
+      context: .
+      target: production
+    ports:
+      - 8081:8080
+    
+  scheduling-api-dev:
+    container_name: scheduling-api-dev
+    restart: unless-stop
+    build: 
+      context: .
+      target: development
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/scheduling-api
