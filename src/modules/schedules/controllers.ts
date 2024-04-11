@@ -17,20 +17,6 @@ export default class ScheduleControllers {
     }
   }
 
-  async generateSchedulePdf (req: Request, res: Response): Promise<void> {
-    const { degree, semester, classroom } = req.body as ScheduleDTO
-    try {
-      await service.generateSchedulePdf({
-        degree,
-        semester,
-        classroom
-      })
-      res.status(200).json({ message: 'PDF generado exitosamente' })
-    } catch (error: any) {
-      res.status(400).json({ error: error.message })
-    }
-  }
-
   async getEvents (req: Request, res: Response): Promise<void> {
     const degree = req.query.degree as string
     const semester = req.query.semester as string

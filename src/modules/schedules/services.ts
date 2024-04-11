@@ -1,10 +1,6 @@
-// ** Modules
-import path from 'node:path'
-
 // ** Libs
 import { formatInterval } from '../../libs/formatInterval'
 import { generateRandomDay } from '../../libs/generateRandomDay'
-import { generatePDF } from '../../libs/generatePDF'
 import { formatEvent } from '../../libs/formatEvent'
 
 // ** Models
@@ -14,7 +10,6 @@ import Semesters from '../semesters/model'
 
 // ** Types
 import {
-  type ScheduleSchema,
   type ScheduleDTO,
   type ScheduleEvent
 } from './definitions'
@@ -22,9 +17,6 @@ import {
 // ** Utils
 import { subjectsForLab } from '../../utils/subjectsForLab'
 import { subjectsForPC, dinForPc } from '../../utils/subjectsForPc'
-import { weekDays } from '../../utils/weekDays'
-import { morningHours } from '../../utils/morningHours'
-import { afternoonHours } from '../../utils/afterHours'
 
 export default class ScheduleServices {
   async generateBySemester (data: ScheduleDTO):
@@ -140,52 +132,6 @@ export default class ScheduleServices {
         }
       }
     }
-  }
-
-  async generateSchedulePdf (data: ScheduleDTO): Promise<void> {
-    const templetaPath = path.join(
-      process.cwd(),
-      'src',
-      'templetes',
-      'schedule.handlebars'
-    )
-
-    const outputPath = path.join(
-      process.cwd(),
-      'public',
-      'schedules',
-      `${data.degree}-${data.semester}-${data.classroom?.split(' ').join('-')}.pdf`
-    )
-
-    const schedulesData = await Schedule.find({
-      $and: [
-        { semester: data.semester },
-        { degree: data.degree }
-      ]
-    })
-
-    const schedules: ScheduleSchema[] = schedulesData.map(sch => ({
-      classroom: sch.classroom,
-      day: sch.day,
-      degree: sch.degree,
-      endTime: sch.endTime,
-      semester: sch.semester,
-      startTime: sch.startTime,
-      subject: sch.subject,
-      extra: {
-        hourInterval: sch.extra.hourInterval,
-        subjectType: sch.extra.subjectType
-      }
-    }))
-
-    const pdfData = {
-      days: weekDays,
-      hours: morningHours.concat(afternoonHours),
-      schedules,
-      classroom: data.classroom
-    }
-
-    await generatePDF(pdfData, templetaPath, outputPath)
   }
 
   async getScheduleEvent (data: ScheduleDTO):
