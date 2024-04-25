@@ -29,7 +29,7 @@ export function formatEvent (scheduleDetails: ScheduleData, param: ScheduleParam
     id: scheduleDetails._id,
     end,
     start,
-    title: scheduleDetails.subject + ' ' + scheduleDetails.extra.subjectType,
+    title: scheduleDetails.subject,
     metadata,
     type: scheduleDetails.extra.subjectType
   }

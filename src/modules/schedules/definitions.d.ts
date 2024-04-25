@@ -23,6 +23,7 @@ export interface ScheduleSchema {
     hourInterval: number
     subjectType: string
   }
+  [key: string]: any
 }
 
 export interface ScheduleData extends ScheduleSchema {
