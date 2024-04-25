@@ -9,8 +9,8 @@ ENV NODE_ENV=development
 COPY package*.json $DIR
 COPY tsconfig*.json $DIR
 COPY src $DIR/src
-RUN npm ci
-CMD [ "npm", "run", "dev" ]
+RUN npm install --force
+CMD [ "npm", "run", "start:dev" ]
 
 # Build Stage
 FROM base AS build

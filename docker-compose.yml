@@ -1,20 +1,36 @@
 version: '3.8'
 
 services:
+  datastore:
+    image: mongo:6.0-rc
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=anibal
+      - MONGO_INITDB_ROOT_PASSWORD=351z
+    ports:
+      - 27018:27017
+
   scheduling-api:
     container_name: scheduling-api
     build: 
       context: .
       target: production
+    environment:
+      - PORT=8080
+      - DB_URI=mongodb://anibal:351z@datastore:27017
     ports:
-      - 8081:8080
+      - 8080:8080
     
   scheduling-api-dev:
     container_name: scheduling-api-dev
-    restart: unless-stop
+    restart: always
+    depends_on:
+      - datastore
     build: 
       context: .
       target: development
+    environment:
+      - PORT=8080
+      - DB_URI=mongodb://anibal:351z@datastore:27017
     ports:
       - 8080:8080
     volumes:

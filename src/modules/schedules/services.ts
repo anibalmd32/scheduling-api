@@ -11,7 +11,11 @@ import Semesters from '../semesters/model'
 // ** Types
 import {
   type ScheduleDTO,
-  type ScheduleEvent
+  type ScheduleEvent,
+  type SubjectScheduleDTO,
+  type ScheduleData,
+  type ScheduleParam,
+  type ScheduleQuery
 } from './definitions'
 
 // ** Utils
@@ -134,20 +138,41 @@ export default class ScheduleServices {
     }
   }
 
-  async getScheduleEvent (data: ScheduleDTO):
+  async getScheduleEvents (data: ScheduleQuery):
   Promise<ScheduleEvent[]> {
     const schedulesData = await Schedule.find({
-      $and: [
-        { semester: data.semester },
-        { degree: data.degree },
-        { classroom: data.classroom }
-      ]
+      [data.query]: data.value
     })
 
     const events: ScheduleEvent[] = schedulesData.map(sch => {
-      return formatEvent(sch)
+      const details: ScheduleData = {
+        _id: String(sch._id),
+        classroom: sch.classroom,
+        day: sch.day,
+        endTime: sch.endTime,
+        startTime: sch.startTime,
+        subject: sch.subject,
+        degree: sch.degree,
+        semester: sch.semester,
+        extra: sch.extra
+      }
+
+      const param: ScheduleParam = data.query
+
+      return formatEvent(details, param)
     })
 
     return events
+  }
+
+  async updateSubjectSchedule (data: SubjectScheduleDTO): Promise<void> {
+    await Schedule.findOneAndUpdate(
+      { _id: data.id },
+      {
+        day: data.day,
+        endTime: data.endTime,
+        startTime: data.startTime
+      }
+    )
   }
 }
