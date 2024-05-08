@@ -6,7 +6,7 @@
 	"scripts": {
 		"start:dev": "cross-env NODE_ENV=dev ts-node-dev --respawn --transpile-only ./src/app.ts",
 		"build": "tsc",
-		"start:prod": "cross-env NODE_ENV=prod node ./dist/app.js",
+		"start:prod": "cross-env NODE_ENV=prod DB_URI=mongodb+srv://anibalmd32:0QMYMQpq8BPDuGpK@cluster0.mrlie0w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0 node ./dist/app.js",
 		"lint": "eslint ./src/*.ts",
 		"db:seed": "ts-node ./src/database/seeds/seeds.ts",
 		"docker:build-dev": "docker-compose up datastore scheduling-api-dev --build",
