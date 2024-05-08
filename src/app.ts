@@ -5,8 +5,6 @@ import router from './router'
 import { uri, port } from './utils/contants'
 import { databaseConnection } from './database/connection'
 
-console.info('Starting server...', process.env.NODE_ENV, process.env.PORT, process.env.DB_URI)
-
 void databaseConnection(uri)
 const app = express()
 
