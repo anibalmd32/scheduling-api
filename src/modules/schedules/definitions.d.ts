@@ -48,3 +48,20 @@ export interface ScheduleQuery {
   query: ScheduleParam
   value: string
 }
+
+export interface ScheduleDataDTO {
+  start: string
+  end: string
+  clarrooom: string
+  semester: number | undefined
+  subject: string
+  typeClassroom: string
+  day: string
+  hourInterval: number
+}
+
+export interface UpdateSchedueleDTO {
+  day: string
+  start: string
+  end: string
+}

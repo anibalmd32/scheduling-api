@@ -15,7 +15,9 @@ import {
   type SubjectScheduleDTO,
   type ScheduleData,
   type ScheduleParam,
-  type ScheduleQuery
+  type ScheduleQuery,
+  type ScheduleDataDTO,
+  type UpdateSchedueleDTO
 } from './definitions'
 
 // ** Utils
@@ -139,9 +141,21 @@ export default class ScheduleServices {
   }
 
   async getScheduleEvents (data: ScheduleQuery):
-  Promise<ScheduleEvent[]> {
+    Promise<ScheduleEvent[]> {
+
+    let searchValue;
+    
+    // TODO: Refactor this from if/else to indexable object
+    if (data.query === 'classroom') {
+      const classroomData = await Classrooms.findById(data.value)
+      searchValue = classroomData?.code
+    } else if (data.query === 'semester') {
+      const semesterData = await Semesters.findById(data.value)
+      searchValue = semesterData?.number
+    }
+    
     const schedulesData = await Schedule.find({
-      [data.query]: data.value
+      [data.query]: searchValue
     })
 
     const events: ScheduleEvent[] = schedulesData.map(sch => {
@@ -174,5 +188,86 @@ export default class ScheduleServices {
         startTime: data.startTime
       }
     )
+  }
+
+  async createScheduleFromClassroom (data: ScheduleDataDTO): Promise<ScheduleEvent> {
+
+    const schedule = new Schedule({
+      day: data.day,
+      startTime: data.start,
+      endTime: data.end,
+      classroom: data.clarrooom,
+      subject: data.subject,
+      degree: 'sistemas',
+      semester: data.semester,
+      extra: {
+        hourInterval: data.hourInterval,
+        subjectType: data.typeClassroom
+      }
+    })
+
+    await schedule.save()
+
+    const scheduleEvent = formatEvent({
+      _id: String(schedule._id),
+      classroom: data.clarrooom,
+      day: data.day,
+      endTime: data.end,
+      startTime: data.start,
+      subject: data.subject,
+      degree: 'sistemas',
+      semester: data.semester!,
+      extra: {
+        hourInterval: data.hourInterval,
+        subjectType: data.typeClassroom
+      }
+    }, 'classroom')
+
+    return scheduleEvent
+  }
+
+  async updateSchedule(id: string, data: UpdateSchedueleDTO): Promise<ScheduleEvent> {
+    const schedule = await Schedule.findOne({
+      _id: id
+    })
+
+    if (schedule == null) {
+      throw new Error('No se encontro el horario')
+    }
+
+    const updated = await Schedule.findOneAndUpdate(
+      { _id: id },
+      {
+        day: data.day,
+        endTime: data.end,
+        startTime: data.start
+      },
+      { new: true}
+    )
+
+    if (updated == null) {
+      throw new Error('Error al actualizar el horario')
+    }
+
+    const scheduleEvent = formatEvent({
+      _id: String(updated._id),
+      classroom: updated.classroom,
+      day: updated.day,
+      endTime: updated.endTime,
+      startTime: updated.startTime,
+      subject: updated.subject,
+      degree: updated.degree,
+      semester: updated.semester,
+      extra: {
+        hourInterval: updated.extra.hourInterval,
+        subjectType: updated.extra.subjectType
+      }
+    }, 'classroom')
+
+    return scheduleEvent
+  }
+
+  async deleteSchedule(id: string): Promise<void> {
+    await Schedule.findOneAndDelete({ _id: id })
   }
 }

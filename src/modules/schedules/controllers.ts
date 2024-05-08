@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { type ScheduleDTO, type SubjectScheduleDTO } from './definitions'
+import { type ScheduleDTO, type SubjectScheduleDTO, type ScheduleDataDTO, type UpdateSchedueleDTO } from './definitions'
 import ScheduleServices from './services'
 
 const service = new ScheduleServices()
@@ -37,6 +37,40 @@ export default class ScheduleControllers {
 
     try {
       await service.updateSubjectSchedule(data)
+      res.status(200).json({ message: 'success' })
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
+
+  async createScheduleFromClassroom (req: Request, res: Response): Promise<void> {
+    const data = req.body as ScheduleDataDTO
+
+    try {
+      const scheduleEvet = await service.createScheduleFromClassroom(data)
+      res.status(200).json(scheduleEvet)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
+
+  async updateSchedule (req: Request, res: Response): Promise<void> {
+    const data = req.body as UpdateSchedueleDTO
+    const { id } = req.params
+
+    try {
+      const scheduleEvent = await service.updateSchedule(String(id), data)
+      res.status(200).json(scheduleEvent)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
+
+  async deleteSchedule (req: Request, res: Response): Promise<void> {
+    const { id } = req.params
+
+    try {
+      await service.deleteSchedule(String(id))
       res.status(200).json({ message: 'success' })
     } catch (error: any) {
       res.status(400).json({ error: error.message })

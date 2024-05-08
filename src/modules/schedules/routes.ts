@@ -16,4 +16,16 @@ router.put('/subjects/update', async (req, res) => {
   await controllers.updateSubjectSchedule(req, res)
 })
 
+router.post('/classroom/create', async (req, res) => {
+  await controllers.createScheduleFromClassroom(req, res)
+})
+
+router.put('/as-events/:id', async (req, res) => {
+  await controllers.updateSchedule(req, res)
+})
+
+router.delete('/as-events/:id', async (req, res) => {
+  await controllers.deleteSchedule(req, res)
+})
+
 export default router

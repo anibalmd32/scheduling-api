@@ -18,13 +18,6 @@ const classroomSchema = new Schema<ClassroomSchema>({
   versionKey: false
 })
 
-classroomSchema.set('toJSON', {
-  transform: (doc, ret) => {
-    ret.id = ret._id
-    delete ret._id
-  }
-})
-
 const Classrooms = model('classrooms', classroomSchema)
 
 export default Classrooms

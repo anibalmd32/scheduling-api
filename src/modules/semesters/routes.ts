@@ -4,7 +4,7 @@ import SemesterController from './controllers'
 const router = Router()
 const constroller = new SemesterController()
 
-router.get('/all', async (req, res) => {
+router.get('/', async (req, res) => {
   await constroller.getAll(req, res)
 })
 

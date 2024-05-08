@@ -3,21 +3,20 @@ import { ClassroomControllers } from './controllers'
 
 const router = Router()
 const controller = new ClassroomControllers()
-const baseUrl = '/classrooms'
 
-router.post(`${baseUrl}`, async (req, res) => {
+router.post('/', async (req, res) => {
   await controller.createOne(req, res)
 })
 
-router.get(`${baseUrl}`, async (req, res) => {
+router.get('/', async (req, res) => {
   await controller.getAll(req, res)
 })
 
-router.put(`${baseUrl}/:id`, async (req, res) => {
+router.put(`/:id`, async (req, res) => {
   await controller.updateData(req, res)
 })
 
-router.delete(`${baseUrl}/:id`, async (req, res) => {
+router.delete(`/:id`, async (req, res) => {
   await controller.deleteOne(req, res)
 })
 
