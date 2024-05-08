@@ -13,6 +13,9 @@ app.use(express.static('public'))
 app.use(cors())
 app.use(morgan('dev'))
 
+app.get('/', (req, res) => {
+  res.send('Scheduling API V1 is running')
+})
 app.use(router);
 
 app.listen(port, () => {
