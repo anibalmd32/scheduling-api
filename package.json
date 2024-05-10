@@ -11,7 +11,7 @@
 		"db:seed": "ts-node ./src/database/seeds/seeds.ts",
 		"docker:build-dev": "docker-compose up datastore scheduling-api-dev --build",
 		"docker:build-prod": "docker-compose up datastore scheduling-api --build",
-		"ec2:connet": "ssh -i anibal-node-ec2.pem ubuntu@ec2-54-88-38-251.compute-1.amazonaws.com"
+		"ec2:connet": "ssh -i anibal-node-ec2.pem ubuntu@ec2-100-27-219-153.compute-1.amazonaws.com"
 	},
 	"keywords": [
 		"scheduling",
