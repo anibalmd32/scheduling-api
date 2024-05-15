@@ -57,7 +57,8 @@ export interface ScheduleDataDTO {
   subject: string
   typeClassroom: string
   day: string
-  hourInterval: number
+  hours: number
+  typeSubject: string
 }
 
 export interface UpdateSchedueleDTO {

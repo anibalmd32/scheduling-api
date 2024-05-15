@@ -192,6 +192,28 @@ export default class ScheduleServices {
 
   async createScheduleFromClassroom (data: ScheduleDataDTO): Promise<ScheduleEvent> {
 
+    // ? Update Subject hours by its type
+    const typeSubject = data.typeSubject
+
+    const typeHours: Record<string, string> = {
+      'teoria': 'theoryHours',
+      'practica': 'practiceHours',
+      'laboratorio': 'laboratoryHours'
+    }
+
+    const setKey = `sections.$[].subjects.$[j].${typeHours[typeSubject]}`;
+
+    await Semesters.findOneAndUpdate(
+      { 'sections.subjects.name': data.subject },
+      { $set: { [setKey]: data.hours } },
+      {
+        arrayFilters: [
+          { 'j.name': data.subject },
+        ]
+      }
+    )
+
+    // ? Add new Schedule
     const schedule = new Schedule({
       day: data.day,
       startTime: data.start,
@@ -201,13 +223,13 @@ export default class ScheduleServices {
       degree: 'sistemas',
       semester: data.semester,
       extra: {
-        hourInterval: data.hourInterval,
-        subjectType: data.typeClassroom
+        subjectType: data.typeSubject
       }
     })
 
     await schedule.save()
 
+    // ? Get the new schedule formated and return
     const scheduleEvent = formatEvent({
       _id: String(schedule._id),
       classroom: data.clarrooom,
@@ -218,12 +240,12 @@ export default class ScheduleServices {
       degree: 'sistemas',
       semester: data.semester!,
       extra: {
-        hourInterval: data.hourInterval,
+        hourInterval: 0,
         subjectType: data.typeClassroom
       }
-    }, 'classroom')
+    }, 'classroom');
 
-    return scheduleEvent
+    return scheduleEvent;
   }
 
   async updateSchedule(id: string, data: UpdateSchedueleDTO): Promise<ScheduleEvent> {
