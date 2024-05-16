@@ -23,6 +23,7 @@ export interface ScheduleSchema {
     hourInterval: number
     subjectType: string
   }
+  subjectId?: string
   [key: string]: any
 }
 
@@ -55,6 +56,7 @@ export interface ScheduleDataDTO {
   clarrooom: string
   semester: number | undefined
   subject: string
+  subjectId: string
   typeClassroom: string
   day: string
   hours: number

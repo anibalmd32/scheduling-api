@@ -220,6 +220,7 @@ export default class ScheduleServices {
       endTime: data.end,
       classroom: data.clarrooom,
       subject: data.subject,
+      subjectId: data.subjectId,
       degree: 'sistemas',
       semester: data.semester,
       extra: {
@@ -262,7 +263,8 @@ export default class ScheduleServices {
       {
         day: data.day,
         endTime: data.end,
-        startTime: data.start
+        startTime: data.start,
+        
       },
       { new: true}
     )

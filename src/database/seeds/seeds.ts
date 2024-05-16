@@ -7,7 +7,7 @@ import { daysSeeder } from './days'
 import { semestersSeeder } from './semesters'
 import { classroomsSeeder } from './classrooms'
 
-connect(uri)
+connect(String(uri))
   .then(async conn => {
     console.info('Database connection open')
     console.info('Sedding database...')

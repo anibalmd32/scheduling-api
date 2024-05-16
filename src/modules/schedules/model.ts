@@ -7,6 +7,7 @@ const scheduleSchema = new Schema<ScheduleSchema>({
   endTime: String,
   startTime: String,
   subject: String,
+  subjectId: String,
   degree: String,
   semester: Number,
   extra: {

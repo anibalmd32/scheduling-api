@@ -13,26 +13,26 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Lenguaje y comunicación',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Matemática',
               laboratoryHours: 0,
-              practiceHours: 4,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Filosofía, ética y valores',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 4
+              theoryHours: 0
             },
             {
               name: 'DIN',
               laboratoryHours: 0,
-              practiceHours: 1,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             }
           ]
         }]
@@ -46,50 +46,50 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Geometría Anaítica',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Matemética I',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 4
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Hombre, Ciencia y Sociedad',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Seminario I',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 1
+              theoryHours: 0
             },
             {
               name: 'Educación Ambiental',
               laboratoryHours: 0,
-              practiceHours: 1,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Dibujo',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 1
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Inglés I',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'DIN I',
               laboratoryHours: 0,
-              practiceHours: 1,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             }
           ]
         }]
@@ -103,49 +103,49 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Matemática II',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 4
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Algebra Lineal',
               laboratoryHours: 0,
-              practiceHours: 4,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Química General',
               laboratoryHours: 3,
-              practiceHours: 2,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Seminario II',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 1
+              theoryHours: 0
             },
             {
               name: 'Inglés II',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Física I',
-              laboratoryHours: 2,
-              practiceHours: 2,
-              theoryHours: 4
+              laboratoryHours: 0,
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'DIN II',
               laboratoryHours: 0,
-              practiceHours: 1,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'ACO I',
               laboratoryHours: 0,
-              practiceHours: 2,
+              practiceHours: 0,
               theoryHours: 0
             }
           ]
@@ -160,32 +160,32 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Matemática III',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 4
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Probabilidad y Estadística',
               laboratoryHours: 0,
-              practiceHours: 4,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Física II',
-              laboratoryHours: 2,
-              practiceHours: 2,
-              theoryHours: 4
+              laboratoryHours: 0,
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Programación',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 2
+              theoryHours: 0
             },
             {
               name: 'Sistemas Administrativos',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'DIN III',
@@ -205,49 +205,49 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Lógica Matemática',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Lenguaje de Programación I',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 4
+              theoryHours: 0
             },
             {
               name: 'Teoría de Sistemas',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Calculo Numérico',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Sistemas de Producción',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Procesamiento de Datos',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'DIN IV',
               laboratoryHours: 0,
-              practiceHours: 1,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'ACO II',
               laboratoryHours: 0,
-              practiceHours: 2,
+              practiceHours: 0,
               theoryHours: 0
             }
           ]
@@ -262,50 +262,50 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Investigación de Operaciones',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 4
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Teoría de Grafos',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Bases de Datos',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 3
+              theoryHours: 0
             },
             {
               name: 'Analísis de Sistemas',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Lenguaje de Programación II',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 4
+              theoryHours: 0
             },
             {
               name: 'Circuito Lógico',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'DIV V',
               laboratoryHours: 0,
-              practiceHours: 1,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Catedra I',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 2
+              theoryHours: 0
             }
           ]
         }]
@@ -319,56 +319,56 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Diseño de Sistemas',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Optimización no Lineal',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 4
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Procesos Estocásticos',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Arquitectura del Computador',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 4
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Catedra II',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 2
+              theoryHours: 0
             },
             {
               name: 'Sistemas Operativos',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 3
+              theoryHours: 0
             },
             {
               name: 'Lenguaje de Programación III',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 4
+              theoryHours: 0
             },
             {
               name: 'ACO III',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 2
+              theoryHours: 0
             },
             {
               name: 'DIN VI',
               laboratoryHours: 0,
-              practiceHours: 1,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             }
           ]
         }]
@@ -382,50 +382,50 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Metología de la Investigación',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Gerencia de la informática',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Redes',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 3
+              theoryHours: 0
             },
             {
               name: 'Simulación y Modelos',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 4
+              theoryHours: 0
             },
             {
               name: 'SABD',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 4
+              theoryHours: 0
             },
             {
               name: 'DIN VII',
               laboratoryHours: 0,
-              practiceHours: 1,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'ADM RRHH',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 3
+              theoryHours: 0
             },
             {
               name: 'Implatación de Sistemas',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             }
           ]
         }]
@@ -439,50 +439,50 @@ export async function semestersSeeder (): Promise<void> {
             {
               name: 'Teleprocesos',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Teoría de decisiones',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Auditoría de Sistemas',
               laboratoryHours: 0,
-              practiceHours: 3,
-              theoryHours: 3
+              practiceHours: 0,
+              theoryHours: 0
             },
             {
               name: 'Marco Legal para el Ejercicio de la Ingenería',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 4
+              theoryHours: 0
             },
             {
               name: 'Arquitectura del Softwere',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 4
+              theoryHours: 0
             },
             {
               name: 'Calidad Total',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 3
+              theoryHours: 0
             },
             {
               name: 'ACO IV',
               laboratoryHours: 0,
               practiceHours: 0,
-              theoryHours: 2
+              theoryHours: 0
             },
             {
               name: 'DIN VIII',
               laboratoryHours: 0,
-              practiceHours: 2,
-              theoryHours: 2
+              practiceHours: 0,
+              theoryHours: 0
             }
           ]
         }]

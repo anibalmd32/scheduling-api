@@ -1,5 +1,6 @@
 import Semesters from './model'
 import { type SemesterSchema, type Subject } from './definitions'
+import Schedule from '../schedules/model'
 
 export default class SemesterService {
   async getSemesters (number: number): Promise<SemesterSchema[]> {
@@ -19,6 +20,12 @@ export default class SemesterService {
         ],
         new: true
       }
+    )
+
+    // ? Update subject in schedule
+    await Schedule.findOneAndUpdate(
+      { subjectId: data._id },
+      { subject: data.name }
     )
 
     if (updatedSemester === null) {
