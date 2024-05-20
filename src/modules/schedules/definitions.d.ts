@@ -67,4 +67,12 @@ export interface UpdateSchedueleDTO {
   day: string
   start: string
   end: string
+  typeSubject: string
+  hours: number
+  subject: string
+}
+
+export interface DeleteSubjectDTO {
+  subject: string
+  typeSubject: string
 }

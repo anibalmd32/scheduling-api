@@ -1,5 +1,11 @@
 import { type Request, type Response } from 'express'
-import { type ScheduleDTO, type SubjectScheduleDTO, type ScheduleDataDTO, type UpdateSchedueleDTO } from './definitions'
+import {
+  type ScheduleDTO,
+  type SubjectScheduleDTO,
+  type ScheduleDataDTO,
+  type UpdateSchedueleDTO,
+  type DeleteSubjectDTO
+} from './definitions'
 import ScheduleServices from './services'
 
 const service = new ScheduleServices()
@@ -68,9 +74,10 @@ export default class ScheduleControllers {
 
   async deleteSchedule (req: Request, res: Response): Promise<void> {
     const { id } = req.params
+    const data = req.body as DeleteSubjectDTO
 
     try {
-      await service.deleteSchedule(String(id))
+      await service.deleteSchedule(String(id), data)
       res.status(200).json({ message: 'success' })
     } catch (error: any) {
       res.status(400).json({ error: error.message })

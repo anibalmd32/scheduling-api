@@ -17,7 +17,8 @@ import {
   type ScheduleParam,
   type ScheduleQuery,
   type ScheduleDataDTO,
-  type UpdateSchedueleDTO
+  type UpdateSchedueleDTO,
+  type DeleteSubjectDTO
 } from './definitions'
 
 // ** Utils
@@ -249,6 +250,7 @@ export default class ScheduleServices {
     return scheduleEvent;
   }
 
+  //? Actualiza cando el evento detecta un cambio
   async updateSchedule(id: string, data: UpdateSchedueleDTO): Promise<ScheduleEvent> {
     const schedule = await Schedule.findOne({
       _id: id
@@ -257,6 +259,27 @@ export default class ScheduleServices {
     if (schedule == null) {
       throw new Error('No se encontro el horario')
     }
+
+    // ? Update Subject hours by its type
+    const typeSubject = data.typeSubject
+
+    const typeHours: Record<string, string> = {
+      'teoria': 'theoryHours',
+      'practica': 'practiceHours',
+      'laboratorio': 'laboratoryHours'
+    }
+
+    const setKey = `sections.$[].subjects.$[j].${typeHours[typeSubject]}`;
+
+    await Semesters.findOneAndUpdate(
+      { 'sections.subjects.name': data.subject },
+      { $set: { [setKey]: data.hours } },
+      {
+        arrayFilters: [
+          { 'j.name': data.subject },
+        ]
+      }
+    )
 
     const updated = await Schedule.findOneAndUpdate(
       { _id: id },
@@ -291,7 +314,27 @@ export default class ScheduleServices {
     return scheduleEvent
   }
 
-  async deleteSchedule(id: string): Promise<void> {
+  async deleteSchedule(id: string, data: DeleteSubjectDTO): Promise<void> {
+     const typeSubject = data.typeSubject
+
+    const typeHours: Record<string, string> = {
+      'teoria': 'theoryHours',
+      'practica': 'practiceHours',
+      'laboratorio': 'laboratoryHours'
+    }
+
+    const setKey = `sections.$[].subjects.$[j].${typeHours[typeSubject]}`;
+
+    await Semesters.findOneAndUpdate(
+      { 'sections.subjects.name': data.subject },
+      { $set: { [setKey]: 0 } },
+      {
+        arrayFilters: [
+          { 'j.name': data.subject },
+        ]
+      }
+    )
+
     await Schedule.findOneAndDelete({ _id: id })
   }
 }

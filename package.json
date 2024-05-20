@@ -4,7 +4,7 @@
 	"description": "API para la creación y gestión de horarios escolares",
 	"main": "./dist/app.js",
 	"scripts": {
-		"start:dev": "cross-env NODE_ENV=dev ts-node-dev --respawn --transpile-only ./src/app.ts",
+		"dev": "cross-env NODE_ENV=dev ts-node-dev --respawn --transpile-only ./src/app.ts",
 		"build": "tsc",
 		"start:prod": "cross-env NODE_ENV=prod node ./dist/app.js",
 		"lint": "eslint ./src/*.ts",

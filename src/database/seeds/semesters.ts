@@ -114,7 +114,7 @@ export async function semestersSeeder (): Promise<void> {
             },
             {
               name: 'Química General',
-              laboratoryHours: 3,
+              laboratoryHours: 0,
               practiceHours: 0,
               theoryHours: 0
             },
