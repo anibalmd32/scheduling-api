@@ -9,7 +9,7 @@ export interface ProfessorSchema {
     phone: string
   }
   condition: string
-  schedule: ScheduleSchema[]
+  schedule: any[] | []
 }
 
 export interface ProfessorsDTO extends Pick<

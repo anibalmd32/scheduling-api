@@ -43,7 +43,7 @@ export interface ScheduleEvent {
   type: string
 }
 
-export type ScheduleParam = 'semester' | 'degree' | 'classroom'
+export type ScheduleParam = 'semester' | 'degree' | 'classroom' | 'professor'
 
 export interface ScheduleQuery {
   query: ScheduleParam

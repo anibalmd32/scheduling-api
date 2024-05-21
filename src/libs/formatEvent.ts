@@ -13,7 +13,8 @@ export function formatEvent (scheduleDetails: ScheduleData, param: ScheduleParam
   const metadatadaForParam: Record<ScheduleParam, string[]> = {
     semester: ['degree', 'classroom'],
     degree: ['semester', 'classroom'],
-    classroom: ['semester', 'degree']
+    classroom: ['semester', 'degree'],
+    professor: ['semester', 'degree', 'classroom']
   }
 
   const metadata = metadatadaForParam[param].map(meta => ({

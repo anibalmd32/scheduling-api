@@ -1,17 +1,51 @@
 import Professors from './model'
 import Schedule from '../schedules/model'
 import { type ProfessorsDTO, type ProfessorSchema, type ProfessorsData } from './definitions'
+import { formatEvent } from '../../libs/formatEvent';
+import { ScheduleEvent } from '../schedules/definitions';
 
 export class ProfessorServices {
   async getProfessors(): Promise<ProfessorsData[]> {
     const professors = await Professors.find({});
 
-    return professors.map(professor => ({
-      _id: String(professor._id),
-      condition: professor.condition,
-      data: professor.data,
-      schedule: professor.schedule
-    }))
+    const data = professors.map(professor => {
+      if (professor.schedule.length === 0) {
+        return {
+          _id: String(professor._id),
+          condition: professor.condition,
+          data: professor.data,
+          schedule: []
+        }
+      } else {
+        const schedules = professor.schedule.map(schedule => {
+          const scheduleEvent = formatEvent({
+            _id: String(schedule._id),
+            classroom: schedule.classroom,
+            day: schedule.day,
+            endTime: schedule.endTime,
+            startTime: schedule.startTime,
+            subject: schedule.subject,
+            degree: schedule.degree,
+            semester: schedule.semester,
+            extra: {
+              hourInterval: schedule.extra.hourInterval,
+              subjectType: schedule.extra.subjectType
+            }
+          }, 'professor')
+
+          return scheduleEvent
+        })
+
+        return {
+          _id: String(professor._id),
+          condition: professor.condition,
+          data: professor.data,
+          schedule: schedules
+        }
+      }
+    })
+
+    return data
   }
 
   async addProfessor (data: ProfessorsDTO): Promise<void> {
