@@ -18,7 +18,8 @@ import {
   type ScheduleQuery,
   type ScheduleDataDTO,
   type UpdateSchedueleDTO,
-  type DeleteSubjectDTO
+  type DeleteSubjectDTO,
+  type ScheduleSchema
 } from './definitions'
 
 // ** Utils
@@ -26,6 +27,11 @@ import { subjectsForLab } from '../../utils/subjectsForLab'
 import { subjectsForPC, dinForPc } from '../../utils/subjectsForPc'
 
 export default class ScheduleServices {
+  async getAllSchedules (): Promise<ScheduleSchema[]> {
+    const schedules = await Schedule.find({})
+
+    return schedules
+  }
   async generateBySemester (data: ScheduleDTO):
   Promise<void> {
     const semester = await Semesters.findOne({

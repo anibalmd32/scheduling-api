@@ -4,6 +4,10 @@ import ScheduleControllers from './controllers'
 const router = Router()
 const controllers = new ScheduleControllers()
 
+router.get('/', async (req, res) => {
+  await controllers.getAllSchedules(req, res)
+})
+
 router.post('/generate-data', async (req, res) => {
   await controllers.generateBySemester(req, res)
 })

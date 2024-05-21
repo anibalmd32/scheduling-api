@@ -11,6 +11,14 @@ import ScheduleServices from './services'
 const service = new ScheduleServices()
 
 export default class ScheduleControllers {
+  async getAllSchedules (req: Request, res: Response): Promise<void> {
+    try {
+      const schedules = await service.getAllSchedules()
+      res.status(200).json(schedules)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
   async generateBySemester (req: Request, res: Response): Promise<void> {
     const { degree, semester } = req.body as ScheduleDTO
 

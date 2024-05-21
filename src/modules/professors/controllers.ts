@@ -47,4 +47,16 @@ export default class ProfessrorController {
 			res.status(400).json({ error: error.message })
 		}
 	}
+
+	async asingSchedule(req: Request, res: Response): Promise<void> {
+		const professorId = String(req.params.id)
+		const scheduleId = String(req.body.id)
+
+		try {
+			await service.asingSchedule(scheduleId, professorId)
+			res.status(200).json({ message: 'success' })
+		} catch (error: any) {
+			res.status(400).json({ error: error.message })
+		}
+	}
 }

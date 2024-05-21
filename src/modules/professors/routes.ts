@@ -20,5 +20,9 @@ router.delete('/:id', async (req, res) => {
 	await controller.deleteProfessor(req, res)
 })
 
+router.put('/asign/:id', async (req, res) => {
+	await controller.asingSchedule(req, res)
+})
+
 
 export default router

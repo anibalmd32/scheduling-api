@@ -28,9 +28,10 @@ export class ProfessorServices {
   }
 
   async asingSchedule (shecheduleId: string, professorId: string):
-  Promise<ProfessorSchema | null> {
+  Promise<void> {
     const scheduleForAsign = await Schedule.findById(shecheduleId)
-    const updatedProfessor = await Professors.findByIdAndUpdate(
+    
+    await Professors.findByIdAndUpdate(
       professorId,
       {
         $push: {
@@ -38,8 +39,6 @@ export class ProfessorServices {
         }
       }
     )
-
-    return updatedProfessor
   }
 
   async removeSchedule (shecheduleId: string, professorId: string):
