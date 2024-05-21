@@ -59,4 +59,16 @@ export default class ProfessrorController {
 			res.status(400).json({ error: error.message })
 		}
 	}
+
+	async removeSchedule(req: Request, res: Response): Promise<void> {
+		const professorId = String(req.params.professor)
+		const scheduleId = String(req.params.schedule)
+
+		try {
+			await service.removeSchedule(scheduleId, professorId)
+			res.status(200).json({ message: 'success' })
+		} catch (error: any) {
+			res.status(400).json({ error: error.message })
+		}
+	}
 }

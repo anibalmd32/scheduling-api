@@ -61,8 +61,7 @@ export class ProfessorServices {
     await newProfessor.save()
   }
 
-  async asingSchedule (shecheduleId: string, professorId: string):
-  Promise<void> {
+  async asingSchedule (shecheduleId: string, professorId: string): Promise<void> {
     const scheduleForAsign = await Schedule.findById(shecheduleId)
     
     await Professors.findByIdAndUpdate(
@@ -75,16 +74,16 @@ export class ProfessorServices {
     )
   }
 
-  async removeSchedule (shecheduleId: string, professorId: string):
-  Promise<void> {
+  async removeSchedule (scheduleId: string, professorId: string): Promise<void> {
+  
     await Professors.updateOne(
-      { _id: professorId, 'schedule._id': shecheduleId },
-      {
-        $pull: {
-          'schedule.$._id': shecheduleId
+        { _id: professorId },
+        {
+            $pull: {
+                schedule: { _id: scheduleId }
+            }
         }
-      }
-    )
+    );
   }
 
   async updateProfessor(professorId: string, professorData: ProfessorsDTO): Promise<ProfessorsData> {
