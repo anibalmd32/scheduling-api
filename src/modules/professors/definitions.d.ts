@@ -16,4 +16,8 @@ export interface ProfessorsDTO extends Pick<
 ProfessorSchema,
 'data' |
 'condition'
-> {}
+  > { }
+
+export interface ProfessorsData extends ProfessorSchema {
+  _id: string;
+}
