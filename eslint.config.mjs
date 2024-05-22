@@ -4,15 +4,15 @@ import tseslint from "typescript-eslint";
 
 
 export default [
-  {
-    languageOptions: { globals: globals.browser },
-  },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  {
-    rules: {
-      "@typescript-eslint/no-var-requires": 0,
-      "semi": 2
-    },
-  }
+	{
+		languageOptions: {globals: globals.browser},
+	},
+	pluginJs.configs.recommended,
+	...tseslint.configs.recommended,
+	{
+		rules: {
+			"@typescript-eslint/no-var-requires": 0,
+			"semi": 2
+		},
+	}
 ];
