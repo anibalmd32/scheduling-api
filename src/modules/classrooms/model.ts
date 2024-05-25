@@ -5,6 +5,7 @@ const classroomSchema = new Schema<ClassroomSchema>({
   category: String,
   code: String,
   degrees: [String],
+  isActive: Boolean,
   availability: [{
     name: String,
     hours: [String]

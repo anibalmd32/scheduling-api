@@ -3,6 +3,7 @@ import { type DaySchema } from '../days/definitions'
 export interface ClassroomSchema {
   code: string
   category: 'laboratory' | 'normal' | 'pc'
+  isActive: boolean
   degrees: string[]
   availability: DaySchema[]
   occupied: DaySchema[] | []
@@ -15,4 +16,6 @@ ClassroomSchema,
 'degrees'
 > {}
 
-export interface ClassroomFilters extends Partial<ClassroomDTO> {}
+export interface ClassroomFilters extends Partial<ClassroomDTO> {
+  isActive?: boolean
+}

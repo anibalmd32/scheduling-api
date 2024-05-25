@@ -19,11 +19,11 @@ export class ClassroomControllers {
   }
 
   async getAll (req: Request, res: Response): Promise<void> {
-    const { category, code, degrees } = req.query as ClassroomFilters
+    const { category, code, degrees, isActive } = req.query as ClassroomFilters
 
     try {
       const classroomsData = await service.getClassrooms({
-        category, code, degrees
+        category, code, degrees, isActive
       })
 
       res.status(200).json(classroomsData)
@@ -54,6 +54,19 @@ export class ClassroomControllers {
       const deletedClassroom = await service.deleteClassroom(id)
 
       res.status(200).json(deletedClassroom)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
+
+  async updateIsActive (req: Request, res: Response): Promise<void> {
+    const id = req.params.id
+    const isActive = req.body.isActive
+
+    try {
+      const updatedClassroom = await service.updateClassroomIsActive(id, isActive)
+
+      res.status(200).json(updatedClassroom)
     } catch (error: any) {
       res.status(400).json({ error: error.message })
     }

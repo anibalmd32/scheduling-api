@@ -17,6 +17,7 @@ const classroomsSeed: ClassroomSchema[] = []
 for (const room in classrooms) {
   classroomsSeed.push({
     code: room,
+    isActive: true,
     category: classrooms[room],
     degrees: ['sistemas'],
     availability: createWeekSchedule(),

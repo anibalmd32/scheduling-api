@@ -19,6 +19,7 @@ export class ClassroomServices {
   Promise<ClassroomSchema> {
     const dataForAdd: ClassroomSchema = {
       code: data.code,
+      isActive: true,
       category: data.category,
       degrees: data.degrees,
       availability: createWeekSchedule(),
@@ -38,24 +39,27 @@ export class ClassroomServices {
     if (
       filters.category !== undefined ||
       filters.code !== undefined ||
-      filters.degrees !== undefined
+      filters.degrees !== undefined ||
+      filters.isActive !== undefined
     ) {
       query = {
         $or: [
           { code: filters.code },
           { category: filters.category },
-          { degrees: { $in: filters.degrees } }
+          { degrees: { $in: filters.degrees } },
+          { isActive: filters.isActive }
         ]
       }
     }
+
+    console.log(query)
 
     const classroomsFiltered = await Classrooms.find(query)
 
     return classroomsFiltered
   }
 
-  async updateClassroom (data: Partial<ClassroomDTO>, id: string):
-  Promise<ClassroomSchema | null> {
+  async updateClassroom (data: Partial<ClassroomDTO>, id: string): Promise<ClassroomSchema | null> {
     const updatedClassroom = await Classrooms.findByIdAndUpdate(
       id,
       data,
@@ -65,10 +69,19 @@ export class ClassroomServices {
     return updatedClassroom
   }
 
-  async deleteClassroom (id: string):
-  Promise<ClassroomSchema | null> {
+  async deleteClassroom (id: string): Promise<ClassroomSchema | null> {
     const deletedClassroom = await Classrooms.findByIdAndDelete(id)
 
     return deletedClassroom
+  }
+
+  async updateClassroomIsActive (id: string, isActive: boolean): Promise<ClassroomSchema | null> {
+    const updatedClassroom = await Classrooms.findByIdAndUpdate(
+      id,
+      { isActive },
+      { new: true }
+    )
+
+    return updatedClassroom
   }
 }

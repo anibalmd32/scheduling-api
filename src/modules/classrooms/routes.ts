@@ -20,4 +20,8 @@ router.delete(`/:id`, async (req, res) => {
   await controller.deleteOne(req, res)
 })
 
+router.patch(`/:id`, async (req, res) => {
+  await controller.updateIsActive(req, res)
+})
+
 export default router
