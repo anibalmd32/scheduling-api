@@ -15,13 +15,12 @@ import {
 } from './definitions'
 
 export class ClassroomServices {
-  async addOneClassroom (data: ClassroomDTO):
-  Promise<ClassroomSchema> {
+  async addOneClassroom (data: ClassroomDTO): Promise<ClassroomSchema> {
     const dataForAdd: ClassroomSchema = {
       code: data.code,
       isActive: true,
       category: data.category,
-      degrees: data.degrees,
+      degrees: ['sistemas'],
       availability: createWeekSchedule(),
       occupied: createVoidSchedule()
     }
@@ -39,20 +38,16 @@ export class ClassroomServices {
     if (
       filters.category !== undefined ||
       filters.code !== undefined ||
-      filters.degrees !== undefined ||
       filters.isActive !== undefined
     ) {
       query = {
         $or: [
           { code: filters.code },
           { category: filters.category },
-          { degrees: { $in: filters.degrees } },
           { isActive: filters.isActive }
         ]
       }
     }
-
-    console.log(query)
 
     const classroomsFiltered = await Classrooms.find(query)
 
@@ -69,10 +64,8 @@ export class ClassroomServices {
     return updatedClassroom
   }
 
-  async deleteClassroom (id: string): Promise<ClassroomSchema | null> {
-    const deletedClassroom = await Classrooms.findByIdAndDelete(id)
-
-    return deletedClassroom
+  async deleteClassroom (id: string): Promise<void> {
+    await Classrooms.findByIdAndDelete(id)
   }
 
   async updateClassroomIsActive (id: string, isActive: boolean): Promise<ClassroomSchema | null> {

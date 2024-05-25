@@ -12,8 +12,7 @@ export interface ClassroomSchema {
 export interface ClassroomDTO extends Pick<
 ClassroomSchema,
 'code' |
-'category' |
-'degrees'
+'category'
 > {}
 
 export interface ClassroomFilters extends Partial<ClassroomDTO> {

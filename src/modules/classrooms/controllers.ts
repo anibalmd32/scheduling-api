@@ -5,11 +5,11 @@ import { type ClassroomFilters, type ClassroomDTO } from './definitions'
 const service = new ClassroomServices()
 export class ClassroomControllers {
   async createOne (req: Request, res: Response): Promise<void> {
-    const { category, code, degrees } = req.body as ClassroomDTO
+    const { category, code } = req.body as ClassroomDTO
 
     try {
       const newClassroom = await service.addOneClassroom({
-        category, code, degrees
+        category, code
       })
 
       res.status(200).json(newClassroom)
@@ -19,11 +19,11 @@ export class ClassroomControllers {
   }
 
   async getAll (req: Request, res: Response): Promise<void> {
-    const { category, code, degrees, isActive } = req.query as ClassroomFilters
+    const { category, code, isActive } = req.query as ClassroomFilters
 
     try {
       const classroomsData = await service.getClassrooms({
-        category, code, degrees, isActive
+        category, code, isActive
       })
 
       res.status(200).json(classroomsData)
@@ -33,12 +33,12 @@ export class ClassroomControllers {
   }
 
   async updateData (req: Request, res: Response): Promise<void> {
-    const { category, code, degrees } = req.body as Partial<ClassroomDTO>
+    const { category, code } = req.body as Partial<ClassroomDTO>
     const id = req.params.id
 
     try {
       const updatedClassroom = await service.updateClassroom({
-        category, code, degrees
+        category, code
       }, id)
 
       res.status(200).json(updatedClassroom)
@@ -48,7 +48,7 @@ export class ClassroomControllers {
   }
 
   async deleteOne (req: Request, res: Response): Promise<void> {
-    const id = req.params.findByIdAndDelete
+    const id = req.params.id
 
     try {
       const deletedClassroom = await service.deleteClassroom(id)
