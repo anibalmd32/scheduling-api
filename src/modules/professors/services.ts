@@ -7,7 +7,7 @@ export class ProfessorServices {
 	async getProfessors(): Promise<ProfessorsData[]> {
 		const professors = await Professors.find({});
 
-		const data = professors.map(professor => {
+		const data = await Promise.all(professors.map(async (professor) => {
 			if (professor.schedule.length === 0) {
 				return {
 					_id: String(professor._id),
@@ -16,7 +16,14 @@ export class ProfessorServices {
 					schedule: []
 				};
 			} else {
-				const schedules = professor.schedule.map(schedule => {
+				const schedules = await Promise.all(professor.schedule.map(async (scheduleId) => {
+
+					const schedule = await Schedule.findById(scheduleId);
+
+					if (schedule == null) {
+						throw new Error('No se pudo encontrar el horario')
+					}
+
 					const scheduleEvent = formatEvent({
 						_id: String(schedule._id),
 						classroom: schedule.classroom,
@@ -33,7 +40,7 @@ export class ProfessorServices {
 					}, 'professor');
 
 					return scheduleEvent;
-				});
+				}));
 
 				return {
 					_id: String(professor._id),
@@ -42,7 +49,7 @@ export class ProfessorServices {
 					schedule: schedules
 				};
 			}
-		});
+		}));
 
 		return data;
 	}
@@ -61,13 +68,12 @@ export class ProfessorServices {
 	}
 
 	async asingSchedule(shecheduleId: string, professorId: string): Promise<void> {
-		const scheduleForAsign = await Schedule.findById(shecheduleId);
 
 		await Professors.findByIdAndUpdate(
 			professorId,
 			{
 				$push: {
-					schedule: scheduleForAsign
+					schedule: shecheduleId
 				}
 			}
 		);

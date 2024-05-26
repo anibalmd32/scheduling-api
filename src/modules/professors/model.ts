@@ -10,21 +10,7 @@ const professorSchema = new Schema<ProfessorSchema>({
     email: String,
     phone: String
   },
-  schedule: [{
-    _id: String,
-    subject: String,
-    subjectId: String,
-    day: String,
-    startTime: String,
-    endTime: String,
-    classroom: String,
-    semester: Number,
-    degree: String,
-    extra: {
-      hourInterval: Number,
-      subjectType: String
-    }
-  }]
+  schedule: [String]
 }, {
   _id: true,
   versionKey: false,
