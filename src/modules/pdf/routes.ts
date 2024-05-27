@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 
   try {
 		const browser = await puppeteer.launch({
-			headless: 'chrome',
+			headless: true,
 			args: [
 				"--disable-gpu",
 				"--disable-dev-shm-usage",
@@ -19,10 +19,7 @@ router.get('/', async (req, res) => {
 				"--no-zygote",
 				"--single-process",
 			],
-			ignoreDefaultArgs: [
-				'--disable-extensions',
-			]
-		})
+	});
 		
 		const page = await browser.newPage()
 		await page.goto(`http://100.27.219.153:3000/print?for=${forType}&id=${id}`)
