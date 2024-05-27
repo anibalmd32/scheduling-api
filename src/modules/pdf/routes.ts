@@ -8,18 +8,7 @@ router.get('/', async (req, res) => {
 	const forType = req.query.for
 
   try {
-		const browser = await puppeteer.launch({
-			headless: true,
-			args: [
-				"--disable-gpu",
-				"--disable-dev-shm-usage",
-				"--disable-setuid-sandbox",
-				"--no-first-run",
-				"--no-sandbox",
-				"--no-zygote",
-				"--single-process",
-			],
-	});
+		const browser = await puppeteer.launch({ headless: true });
 		
 		const page = await browser.newPage()
 		await page.goto(`http://100.27.219.153:3000/print?for=${forType}&id=${id}`)
