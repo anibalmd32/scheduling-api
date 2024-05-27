@@ -7,6 +7,7 @@ import { formatEvent } from '../../libs/formatEvent'
 import Schedule from './model'
 import Classrooms from '../classrooms/model'
 import Semesters from '../semesters/model'
+import Professors from '../professors/model'
 
 // ** Types
 import {
@@ -339,6 +340,12 @@ export default class ScheduleServices {
           { 'j.name': data.subject },
         ]
       }
+    )
+
+    await Professors.findOneAndUpdate(
+      { schedule: id },
+      { $pull: { schedule: id } },
+      { new: true }
     )
 
     await Schedule.findOneAndDelete({ _id: id })

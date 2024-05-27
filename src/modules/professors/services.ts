@@ -17,7 +17,6 @@ export class ProfessorServices {
 				};
 			} else {
 				const schedules = await Promise.all(professor.schedule.map(async (scheduleId) => {
-
 					const schedule = await Schedule.findById(scheduleId);
 
 					if (schedule == null) {
@@ -85,7 +84,7 @@ export class ProfessorServices {
 			{_id: professorId},
 			{
 				$pull: {
-					schedule: {_id: scheduleId}
+					schedule: scheduleId
 				}
 			}
 		);
