@@ -28,5 +28,9 @@ router.delete('/delete-subject/:professor/:schedule', async (req, res) => {
 	await controller.removeSchedule(req, res)
 })
 
+router.get('/for-print/:id', async (req, res) => {
+	await controller.forPrintSchedule(req, res)
+})
+
 
 export default router

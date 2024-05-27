@@ -71,4 +71,15 @@ export class ClassroomControllers {
       res.status(400).json({ error: error.message })
     }
   }
+
+  async forPrint (req: Request, res: Response): Promise<void> {
+    const id = req.params.id
+
+    try {
+      const events = await service.forPrintSchedule(id)
+      res.status(200).json(events)
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
 }

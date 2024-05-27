@@ -71,4 +71,15 @@ export default class ProfessrorController {
 			res.status(400).json({ error: error.message })
 		}
 	}
+
+	async forPrintSchedule(req: Request, res: Response): Promise<void> {
+		const professorId = String(req.params.id)
+
+		try {
+			const events = await service.forPrintSchedule(professorId)
+			res.status(200).json(events)
+		}	catch (error: any) {
+			res.status(400).json({ error: error.message })
+		}
+	}
 }

@@ -1,11 +1,14 @@
 // * Models
 import Classrooms from './model'
+import Schedule from '../schedules/model'
 
 // * Libs
 import {
   createWeekSchedule,
-  createVoidSchedule
+  createVoidSchedule,
 } from '../../libs/createWeekSchedule'
+
+import { formatEvent } from '../../libs/formatEvent'
 
 // * Definitions
 import {
@@ -13,6 +16,7 @@ import {
   type ClassroomDTO,
   type ClassroomFilters
 } from './definitions'
+import { ScheduleEvent } from '../schedules/definitions'
 
 export class ClassroomServices {
   async addOneClassroom (data: ClassroomDTO): Promise<ClassroomSchema> {
@@ -77,4 +81,29 @@ export class ClassroomServices {
 
     return updatedClassroom
   }
+
+  async forPrintSchedule(id: string): Promise<ScheduleEvent[]> {
+    const classroom = await Classrooms.findById(id)
+    const schedules = await Schedule.find({ classroom: classroom?.code })
+
+    const events = schedules.map(schedule => {
+      return formatEvent({
+        _id: String(schedule._id),
+        classroom: schedule.classroom,
+        day: schedule.day,
+        endTime: schedule.endTime,
+        startTime: schedule.startTime,
+        subject: schedule.subject,
+        degree: schedule.degree,
+        semester: schedule.semester,
+        extra: {
+          hourInterval: schedule.extra.hourInterval,
+          subjectType: schedule.extra.subjectType
+        }
+      }, 'classroom')
+    })
+
+    return events
+  }
+
 }

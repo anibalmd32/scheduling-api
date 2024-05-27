@@ -24,4 +24,8 @@ router.patch(`/:id`, async (req, res) => {
   await controller.updateIsActive(req, res)
 })
 
+router.get('/for-print/:id', async (req, res) => {
+  await controller.forPrint(req, res)
+})
+
 export default router

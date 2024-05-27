@@ -1,7 +1,8 @@
 import Professors from './model';
 import Schedule from '../schedules/model';
 import {type ProfessorsDTO, type ProfessorSchema, type ProfessorsData} from './definitions';
-import {formatEvent} from '../../libs/formatEvent';
+import { formatEvent } from '../../libs/formatEvent';
+import { type ScheduleEvent } from '../schedules/definitions';
 
 export class ProfessorServices {
 	async getProfessors(): Promise<ProfessorsData[]> {
@@ -110,5 +111,34 @@ export class ProfessorServices {
 
 	async deleteProfessor(professorId: string): Promise<void> {
 		await Professors.findByIdAndDelete(professorId);
+	}
+
+	async forPrintSchedule(id: string): Promise<ScheduleEvent[]> {
+		const professor = await Professors.findById(id)
+		const schedules = professor?.schedule
+
+		if (!schedules) return []
+
+		const events = await Promise.all(schedules?.map(async scheduleId => {
+			const schedule = await Schedule.findById(scheduleId)
+			if (!schedule) throw new Error('No se pudo encontrar el horario')
+
+			return formatEvent({
+				_id: String(schedule._id),
+				classroom: schedule.classroom,
+				day: schedule.day,
+				endTime: schedule.endTime,
+				startTime: schedule.startTime,
+				subject: schedule.subject,
+				degree: schedule.degree,
+				semester: schedule.semester,
+				extra: {
+					hourInterval: schedule.extra.hourInterval,
+					subjectType: schedule.extra.subjectType
+				}
+			}, 'professor')
+		}))
+
+		return events
 	}
 }
