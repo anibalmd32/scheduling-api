@@ -8,8 +8,13 @@ router.get('/', async (req, res) => {
 	const forType = req.query.for
 
   try {
-		const browser = await puppeteer.launch({ headless: true, timeout: 0, args: ['--no-sandbox'] })
-		
+		const browser = await puppeteer.launch({
+			headless: 'chrome',
+			args: [
+				'--no-sandbox',
+			]
+		});
+
 		const page = await browser.newPage()
 		await page.goto(`http://54.235.42.140:3000/print?for=${forType}&id=${id}`)
 		const pdf = await page.pdf({ format: 'A4' })
