@@ -8,16 +8,17 @@ router.get('/', async (req, res) => {
 	const forType = req.query.for
 
   try {
-		const browser = await puppeteer.launch({ headless: true });
+		const browser = await puppeteer.launch({ headless: true, timeout: 0, args: ['--no-sandbox'] })
 		
 		const page = await browser.newPage()
-		await page.goto(`http://100.27.219.153:3000/print?for=${forType}&id=${id}`)
+		await page.goto(`http://54.235.42.140:3000/print?for=${forType}&id=${id}`)
 		const pdf = await page.pdf({ format: 'A4' })
 		await browser.close()
 
 		res.setHeader('Content-Type', 'application/pdf')
 		res.send(pdf)
 	} catch (error: any) {
+		console.log(error)
 		res.status(500).json({ error: error.message })
 	}
 })
