@@ -9,8 +9,7 @@ router.get('/', async (req, res) => {
 
   try {
 		const browser = await puppeteer.launch({
-			executablePath: '/usr/bin/chromium-browser',
-			headless: 'shell',
+			headless: 'chrome',
 			args: [
 				"--disable-gpu",
 				"--disable-dev-shm-usage",
