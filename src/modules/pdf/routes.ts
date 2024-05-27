@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 
   try {
 		const browser = await puppeteer.launch({
-			headless: 'chrome',
+			headless: 'shell',
 			args: [
 				'--no-sandbox',
 			]
