@@ -10,13 +10,19 @@ router.get('/', async (req, res) => {
   try {
 		const browser = await chromium.launch()
 
-		const page = await browser.newPage()
-		await page.goto(`http://54.235.42.140:3000/print?for=${forType}&id=${id}`)
+		const page = await browser.newPage({
+			
+		})
+		await page.goto(`http://54.235.42.140:3000/print?for=${forType}&id=${id}`, {
+			waitUntil: 'networkidle'
+		})
 		await page.emulateMedia({ media: 'screen' });
+
 		const pdf = await page.pdf({
 			width: 1280,
 			height: 800,
 		})
+
 		await browser.close()
 
 		res.setHeader('Content-Type', 'application/pdf')

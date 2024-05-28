@@ -86,9 +86,6 @@ export class ClassroomServices {
     const classroom = await Classrooms.findById(id)
     const schedules = await Schedule.find({ classroom: classroom?.code })
 
-    console.log('Este es el salón', classroom)
-    console.log('Este es el array de horarios', schedules)
-
     const events = schedules.map(schedule => {
       return formatEvent({
         _id: String(schedule._id),
