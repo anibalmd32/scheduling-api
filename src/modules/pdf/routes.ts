@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import puppeteer from 'puppeteer'
+import { chromium } from 'playwright'
 
 const router = Router()
 
@@ -8,22 +8,15 @@ router.get('/', async (req, res) => {
 	const forType = req.query.for
 
   try {
-		const browser = await puppeteer.launch({
-			headless: 'new',
-			args: [
-				"--disable-gpu",
-				"--disable-dev-shm-usage",
-				"--disable-setuid-sandbox",
-				"--no-first-run",
-				"--no-sandbox",
-				"--no-zygote",
-				"--single-process",
-			],
-		});
+		const browser = await chromium.launch()
 
 		const page = await browser.newPage()
 		await page.goto(`http://54.235.42.140:3000/print?for=${forType}&id=${id}`)
-		const pdf = await page.pdf({ format: 'A4' })
+		await page.emulateMedia({ media: 'screen' });
+		const pdf = await page.pdf({
+			width: 1280,
+			height: 800,
+		})
 		await browser.close()
 
 		res.setHeader('Content-Type', 'application/pdf')
