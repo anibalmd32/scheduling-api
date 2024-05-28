@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 
   try {
 		const browser = await puppeteer.launch({
-			headless: 'shell',
+			headless: 'new',
 			args: [
 				"--disable-gpu",
 				"--disable-dev-shm-usage",
