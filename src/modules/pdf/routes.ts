@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 		const browser = await chromium.launch()
 
 		const page = await browser.newPage()
-		await page.goto(`http://localhost:5173/print?for=${forType}&id=${id}`)
+		await page.goto(`http://54.235.42.140:3000/print?for=${forType}&id=${id}`)
 		await page.emulateMedia({ media: 'screen' });
 		const pdf = await page.pdf({
 			width: 1280,
