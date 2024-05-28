@@ -8,7 +8,13 @@ router.get('/', async (req, res) => {
 	const forType = req.query.for
 
   try {
-		const browser = await chromium.launch()
+		const browser = await chromium.launch({
+			args: [
+				"--no-sandbox",
+				"--no-zygote",
+				"--single-process",
+			],
+		})
 
 		const page = await browser.newPage()
 		await page.goto(`http://54.235.42.140:3000/print?for=${forType}&id=${id}`)
