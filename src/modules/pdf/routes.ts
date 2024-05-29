@@ -1,8 +1,10 @@
 import { Router } from 'express'
 import { chromium } from 'playwright'
-import { clientUrl } from '../../utils/contants'
+// import { clientUrl } from '../../utils/contants'
 
 const router = Router()
+
+const clientUrl = 'http://54.235.42.140:3000'
 
 router.get('/', async (req, res) => {
 	const id = req.query.id
