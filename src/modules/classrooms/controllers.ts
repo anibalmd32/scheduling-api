@@ -31,6 +31,17 @@ export class ClassroomControllers {
       res.status(400).json({ error: error.message })
     }
   }
+  
+  async getOneClassroomWithSchedule(req: Request, res: Response): Promise<void> {
+    const id = req.params.id
+
+    try {
+      const { data, schedules } = await service.getOneClassroomWithSchedule(id)
+      res.status(200).json({ data, schedules })
+    } catch (error: any) {
+      res.status(400).json({ error: error.message })
+    }
+  }
 
   async updateData (req: Request, res: Response): Promise<void> {
     const { category, code } = req.body as Partial<ClassroomDTO>

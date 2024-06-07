@@ -16,6 +16,7 @@ import {
   type ClassroomDTO,
   type ClassroomFilters
 } from './definitions'
+import { ScheduleSchema } from '../schedules/definitions'
 import { ScheduleEvent } from '../schedules/definitions'
 
 export class ClassroomServices {
@@ -56,6 +57,22 @@ export class ClassroomServices {
     const classroomsFiltered = await Classrooms.find(query)
 
     return classroomsFiltered
+  }
+
+  async getOneClassroomWithSchedule(id: string): Promise<{
+    data: ClassroomSchema,
+    schedules: ScheduleSchema[]
+  }> {
+    const classroom = await Classrooms.findById(id)
+    
+    if (!classroom) throw new Error('No se encontro el aula')
+
+    const schedules = await Schedule.find({ classroom: classroom.code })
+
+    return {
+      data: classroom,
+      schedules: schedules || []
+    }
   }
 
   async updateClassroom (data: Partial<ClassroomDTO>, id: string): Promise<ClassroomSchema | null> {

@@ -12,6 +12,10 @@ router.get('/', async (req, res) => {
   await controller.getAll(req, res)
 })
 
+router.get('/:id', async (req, res) => {
+  await controller.getOneClassroomWithSchedule(req, res)
+})
+
 router.put(`/:id`, async (req, res) => {
   await controller.updateData(req, res)
 })
