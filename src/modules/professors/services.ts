@@ -69,6 +69,27 @@ export class ProfessorServices {
 
 	async asingSchedule(shecheduleId: string, professorId: string): Promise<void> {
 
+		// Buscar los horarios que ya tiene
+		const professorsSchedules = await Professors.findById(professorId).select('schedule');
+
+		if (professorsSchedules) {
+			for (const schedule of professorsSchedules.schedule) {
+				const professorScheduleData = await Schedule.findById(schedule);
+				const scheduleToAsignData = await Schedule.findById(shecheduleId);
+
+				if (professorScheduleData && scheduleToAsignData) {
+					// Verificar que no sean las mismas horas y dias aunque sea aula distinta
+					if (
+							professorScheduleData.day === scheduleToAsignData.day
+							&& professorScheduleData.startTime === scheduleToAsignData.startTime
+					) {
+						throw new Error('Al docente ya se le ha asigando una materia con la misma hora y dia');
+					}
+					
+				}
+			}
+		}
+
 		await Professors.findByIdAndUpdate(
 			professorId,
 			{

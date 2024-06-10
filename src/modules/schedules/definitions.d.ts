@@ -2,7 +2,11 @@ export interface ScheduleDTO {
   semester: string
   degree: string
   classroom?: string
+  shift?: 'morning' | 'afternoon'
+  startDay?: string
+  endDay?: string
 }
+
 
 export interface SubjectScheduleDTO {
   id: string

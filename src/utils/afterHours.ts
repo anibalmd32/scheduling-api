@@ -5,5 +5,6 @@ export const afternoonHours: string[] = [
   '15:15',
   '16:00',
   '16:45',
-  '17:30'
+  '17:30',
+  '18:15',
 ]

@@ -20,10 +20,10 @@ export default class ScheduleControllers {
     }
   }
   async generateBySemester (req: Request, res: Response): Promise<void> {
-    const { degree, semester } = req.body as ScheduleDTO
+    const { degree, semester, shift, startDay, endDay } = req.body as ScheduleDTO
 
     try {
-      await service.generateBySemester({ degree, semester })
+      await service.generateBySemester({ degree, semester, shift, startDay, endDay })
 
       res.status(200).json({ message: 'Horario generado exitosamente' })
     } catch (error: any) {
