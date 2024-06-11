@@ -404,7 +404,7 @@ export default class ScheduleServices {
 
     // Obtener el aula y las horas actuales del horario
     const classroom = await Classrooms.findOne({ code: schedule.classroom });
-    const availability = classroom?.availability.find(avail => avail.name === schedule.day);
+    const availability = classroom?.availability.find(avail => avail.name === data.day);
 
     if (availability) {
       // Si no se encuentra la hora de inicio disponible, se devuelve un error
