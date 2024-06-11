@@ -73,8 +73,9 @@ export default class ScheduleServices {
     }
 
     const daysOfWeek = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sábado', 'domingo']
-    const startDayIndex = data.startDay ? daysOfWeek.indexOf(data.startDay) : 0
-    const endDayIndex = data.endDay ? daysOfWeek.indexOf(data.endDay) : daysOfWeek.length - 1
+    const startDayIndex = data.startDay === 'cualquier' ? 0 : data.startDay ? daysOfWeek.indexOf(data.startDay) : 0
+    const endDayIndex = data.endDay === 'cualquier' ? daysOfWeek.length - 1 : data.endDay ? daysOfWeek.indexOf(data.endDay) : daysOfWeek.length - 1
+    const rangeDays = daysOfWeek.slice(startDayIndex, endDayIndex + 1)
 
     const allhours = morningHours.concat(afternoonHours)
     const starthour = data.shift === 'morning'
@@ -87,14 +88,11 @@ export default class ScheduleServices {
       : data.shift === 'afternoon'
         ? afternoonHours[afternoonHours.length - 1]
         : '18:15';
-    
+
     const startHourIndex = allhours.indexOf(starthour)
     const endHourIndex = allhours.indexOf(endHour)
     const rangehours = allhours.slice(startHourIndex, endHourIndex + 1)
-
-    const startDay = data.startDay === 'cualquier' ? null : data.startDay
-    const endDay = data.endDay === 'cualquier' ? null : data.endDay
-
+  
     for (const section of semester?.sections) {
       const { subjects } = section
       const query = {
@@ -103,24 +101,20 @@ export default class ScheduleServices {
         },
         availability: {
           $elemMatch: {
-            hours: { $exists: true, $not: { $size: 0 } },
-            name: { $gte: startDay || 'lunes', $lte: endDay || 'sábado' }, // Considera los días de inicio y fin
-            $and: [
-              { hours: { $in: rangehours } },
-              { name: { $in: daysOfWeek } }
-            ],
+            hours: { $in: rangehours },
+            name: { $in: rangeDays }
           }
-        }
+        },
       }
 
       for (const subject of subjects) {
-        const { laboratoryHours, name, practiceHours, theoryHours } = subject
-        const subjectHours: Record<string, number> = { laboratoryHours, practiceHours, theoryHours }
+        const { laboratoryHours, name, practiceHours, theoryHours } = subject;
+        const subjectHours: Record<string, number> = { laboratoryHours, practiceHours, theoryHours };
 
         for (const hours in subjectHours) {
           if (subjectHours[hours] !== 0) {
-            const hourInterval = formatInterval(subjectHours[hours])
-            let category: string[]
+            const hourInterval = formatInterval(subjectHours[hours]);
+            let category: string[];
 
             hours === 'laboratoryHours' && subjectsForLab.includes(name)
               ? category = ['laboratory']
@@ -130,80 +124,97 @@ export default class ScheduleServices {
                   ? category = ['pc']
                   : hours === 'theoryHours' && dinForPc.includes(name)
                     ? category = ['pc']
-                    : category = ['normal']
+                    : category = ['normal'];
 
-            const classroom = await Classrooms.findOne({
-              ...query,
-              category: { $in: category }
-            })
+            let assigned = false;
+            const triedClassrooms = new Set<string>();
 
-            if (classroom == null) {
-              throw new Error('No hay salón disponible')
+            while (!assigned) {
+              const classroom = await Classrooms.findOne({
+                ...query,
+                category: { $in: category },
+                _id: { $nin: Array.from(triedClassrooms) }
+              });
+
+              if (!classroom) {
+                throw new Error(`No hay salón disponible para ${name}`);
+              }
+
+              triedClassrooms.add(classroom._id.toString());
+
+              const classroomDays = classroom.availability
+                .filter(day => (day.hours.length !== 0))
+                .filter(day => {
+                  const dayIndex = daysOfWeek.indexOf(day.name);
+                  return dayIndex >= startDayIndex && dayIndex <= endDayIndex;
+                });
+
+              for (const day of classroomDays) {
+                if (rangehours.length > 0) {
+                  day.hours = day.hours.filter(hour => rangehours.includes(hour));
+                }
+
+                if (day.hours.length >= hourInterval) {
+                  const allAvailableHours = day.hours;
+                  const interval = allAvailableHours.slice(0, hourInterval);
+
+                  if (interval.length >= hourInterval) {
+                    const start = interval[0];
+                    const end = interval[interval.length - 1];
+
+                    await Classrooms.updateOne(
+                      { _id: classroom._id, 'availability.name': day.name },
+                      {
+                        $pull: {
+                          'availability.$.hours': { $in: interval }
+                        }
+                      }
+                    );
+
+                    await Classrooms.updateOne(
+                      { _id: classroom._id, 'availability.name': day.name },
+                      {
+                        $push: {
+                          'occupied.$.hours': { $each: interval }
+                        }
+                      }
+                    );
+
+                    await Schedule.create({
+                      classroom: classroom.code,
+                      day: day.name,
+                      endTime: end,
+                      startTime: start,
+                      subject: subject.name,
+                      degree: data.degree,
+                      semester: data.semester,
+                      extra: {
+                        hourInterval: interval.length,
+                        subjectType: hours === 'laboratoryHours'
+                          ? 'Laboratorio'
+                          : hours === 'practiceHours'
+                            ? 'Práctica'
+                            : 'Teoría'
+                      }
+                    });
+
+                    assigned = true;
+                    break;
+                  }
+                }
+              }
+
+              if (!assigned && triedClassrooms.size === await Classrooms.countDocuments({
+                ...query,
+                category: { $in: category }
+              })) {
+                throw new Error(`No hay suficientes aulas disponibles para ${name}`);
+              }
             }
-
-            console.log(classroom)
-
-            const classroomDays = classroom.availability.filter(day => (day.hours.length !== 0))
-            
-            // const classroomDays = classroom.availability
-            // .filter(day => (day.hours.length !== 0))
-            // .filter(day => {
-            //   const dayIndex = daysOfWeek.indexOf(day.name)
-            //   return dayIndex >= startDayIndex && dayIndex <= endDayIndex
-            // })
-            
-            // const filteredHours = data.shift === 'morning' ? morningHours : data.shift === 'afternoon' ? afternoonHours : []
-
-            // for (const day of classroomDays) {
-            //   if (filteredHours.length > 0) {
-            //     day.hours = day.hours.filter(hour => filteredHours.includes(hour))
-            //   }
-            // }
-
-            const dayToAssign = generateRandomDay(classroomDays, hours)
-            const allAvailableHours = dayToAssign.hours
-            const interval = allAvailableHours.slice(0, hourInterval)
-            const start = interval[0]
-            const end = interval[interval.length - 1]
-
-            await Classrooms.updateOne(
-              { _id: classroom._id, 'availability.name': dayToAssign.name },
-              {
-                $pull: {
-                  'availability.$.hours': { $in: interval }
-                }
-              }
-            )
-
-            await Classrooms.updateOne(
-              { _id: classroom._id, 'availability.name': dayToAssign.name },
-              {
-                $push: {
-                  'occupied.$.hours': { $each: interval }
-                }
-              }
-            )
-
-            await Schedule.create({
-              classroom: classroom.code,
-              day: dayToAssign.name,
-              endTime: end,
-              startTime: start,
-              subject: subject.name,
-              degree: data.degree,
-              semester: data.semester,
-              extra: {
-                hourInterval: interval.length,
-                subjectType: hours === 'laboratoryHours'
-                  ? 'Laboratorio'
-                  : hours === 'practiceHours'
-                    ? 'Práctica'
-                    : 'Teoría'
-              }
-            })
           }
         }
       }
+
     }
   }
 
@@ -211,7 +222,7 @@ export default class ScheduleServices {
     Promise<ScheduleEvent[]> {
 
     let searchValue;
-    
+
     // TODO: Refactor this from if/else to indexable object
     if (data.query === 'classroom') {
       const classroomData = await Classrooms.findById(data.value)
@@ -220,7 +231,7 @@ export default class ScheduleServices {
       const semesterData = await Semesters.findById(data.value)
       searchValue = semesterData?.number
     }
-    
+
     const schedulesData = await Schedule.find({
       [data.query]: searchValue
     })
@@ -257,7 +268,7 @@ export default class ScheduleServices {
     )
   }
 
-  async createScheduleFromClassroom(data: ScheduleDataDTO): Promise<ScheduleEvent> {    
+  async createScheduleFromClassroom(data: ScheduleDataDTO): Promise<ScheduleEvent> {
     // ? Update Subject hours by its type
     const typeSubject = data.typeSubject
 
@@ -266,7 +277,7 @@ export default class ScheduleServices {
     const existeSubjectSchedule = await Schedule.findOne(
       { subject: data.subject, extra: { subjectType: data.typeSubject } }
     )
-    
+
     // Si existe un horario, devuelve un error
     if (existeSubjectSchedule) {
       throw new Error('Ya existe un horario para esta materia y tipo')
@@ -393,6 +404,17 @@ export default class ScheduleServices {
 
     // Obtener el aula y las horas actuales del horario
     const classroom = await Classrooms.findOne({ code: schedule.classroom });
+    const availability = classroom?.availability.find(avail => avail.name === schedule.day);
+
+    if (availability) {
+      // Si no se encuentra la hora de inicio disponible, se devuelve un error
+      const startIndex = availability.hours.findIndex(hour => hour === data.start);
+      const endIndex = availability.hours.findIndex(hour => hour === data.end);
+
+      if (startIndex === -1 || endIndex === -1 || startIndex === undefined || endIndex === undefined) {
+        throw new Error('Esta hora no esta disponible');
+      }
+    }
 
     if (!classroom) {
       throw new Error('No se encontró el aula');
@@ -552,7 +574,7 @@ export default class ScheduleServices {
             { 'dayAvail.name': schedule.day },
             { 'dayOcc.name': schedule.day }
           ]
-        }        
+        }
       );
 
       // Re-ordenar las horas en disponibilidad después de la actualización
